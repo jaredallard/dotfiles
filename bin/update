@@ -3,7 +3,7 @@
 # Quick script to populate / update my dot files
 
 config_dirs="alacritty i3 i3lock polybar nvim"
-home=".zshrc .tmux .tmux.conf .tmux.conf.local antigen.zsh .screenlayout .background"
+home=".zshrc .tmux .tmux.conf .tmux.conf.local antigen.zsh .screenlayout .background .gitconfig"
 
 # files that should go here, but don't
 map=$(cat <<EOF

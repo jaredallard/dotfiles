@@ -3,8 +3,9 @@
 # Installs the dotfiles
 
 if [[ ! -e ".git" ]]; then
+  echo "cloning dotfiles into: $HOME/dotfiles ..."
   git clone git@github.com:jaredallard/dotfiles "$HOME/dotfiles"
-  pushd "$HOME/dotfiles" >/dev/null
+  pushd "$HOME/dotfiles" >/dev/null 2>&1 || exit 1
 fi
 
 IGNORED_FILES=$(cat <<EOF
@@ -16,6 +17,8 @@ EOF
 )
 
 GLOBIGNORE=".:.."
+
+echo "installing dotfiles ..."
 for file in *; do
   grep -w "$file" <<<"$IGNORED_FILES" >/dev/null 2>&1
   if [[ $? == 0 ]]; then
@@ -28,5 +31,7 @@ for file in *; do
     cp -rv "$file" "$HOME"
   fi
 done
+
+echo "done"
 
 popd >/dev/null 2>&1

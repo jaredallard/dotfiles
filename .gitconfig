@@ -1,0 +1,31 @@
+# This is Git's per-user configuration file.
+[user]
+  name = Jared Allard
+  email = jaredallard@outlook.com
+  signingKey = 0CA9135F5BB08943
+
+[core]
+  editor = nvim
+
+[github]
+  user = jaredallard
+
+[color]
+  ui = true
+
+[push]
+  default = simple
+
+[format]
+  pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+  graph = true
+
+[log]
+  abbrevCommit = true
+
+[pull]
+  rebase = true
+
+[commit]
+  gpgSign = true
+

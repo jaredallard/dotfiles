@@ -2,7 +2,7 @@
 #
 # Quick script to populate / update my dot files
 
-config_dirs="alacritty i3 i3lock"
+config_dirs="alacritty i3 i3lock polybar nvim"
 home=".zshrc .tmux .tmux.conf .tmux.conf.local antigen.zsh"
 
 # files that should go here, but don't

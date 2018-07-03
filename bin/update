@@ -8,6 +8,7 @@ home=".zshrc .tmux .tmux.conf .tmux.conf.local antigen.zsh .screenlayout"
 # files that should go here, but don't
 map=$(cat <<EOF
 /usr/bin/lock:.config/i3lock/lock
+/home/jared/.bin/setup-monitors.sh:.bin/setup-monitors.sh
 EOF
 )
 

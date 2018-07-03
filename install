@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+#
+# Installs the dotfiles
+
+if [[ ! -e ".git" ]]; then
+  git clone git@github.com:jaredallard/dotfiles "$HOME/dotfiles"
+  pushd "$HOME/dotfiles" >/dev/null
+fi
+
+IGNORED_FILES=$(cat <<EOF
+.git
+install
+README.md
+bin
+EOF
+)
+
+GLOBIGNORE=".:.."
+for file in *; do
+  grep -w "$file" <<<"$IGNORED_FILES" >/dev/null 2>&1
+  if [[ $? == 0 ]]; then
+    continue
+  fi
+  
+  if [[ ! -d "$file" ]]; then
+    cp -v "$file" "$HOME/$file"
+  else
+    cp -rv "$file" "$HOME"
+  fi
+done
+
+popd >/dev/null 2>&1

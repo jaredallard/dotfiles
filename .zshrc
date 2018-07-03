@@ -95,7 +95,7 @@ marks() {
 }
 
 
-if ! fzf --version >/dev/null; then
+if fzf --version >/dev/null; then
     zplug "junegunn/fzf", use:"shell/completion.zsh"                 # fzf
     zplug "junegunn/fzf", use:"shell/key-bindings.zsh"               # fzf
 fi

@@ -21,13 +21,13 @@ for dir in $config_dirs; do
   location="$HOME/.config/$dir"
   echo " import confg dir: $location"
 
-  cp -rv "$location" ".config/$dir"
+  cp -rTv "$location" ".config/$dir"
 done
 
 # setup root level paths
 for unknown in $home; do
   location="$HOME/$unknown"
-  cp -rv "$location" "./"
+  cp -rvT "$location" "./$unknown"
 done
 
 # cp mapped files
@@ -36,5 +36,5 @@ for file in $map; do
   src=$(awk -F ':' '{ print $1 }' <<<"$file")
   dest=$(awk -F ':' '{ print $2 }' <<<"$file")
 
-  cp -rv "$src" "./$dest"
+  cp -rvT "$src" "./$dest"
 done

@@ -25,11 +25,7 @@ for file in *; do
     continue
   fi
   
-  if [[ ! -d "$file" ]]; then
-    cp -v "$file" "$HOME/$file"
-  else
-    cp -rv "$file" "$HOME"
-  fi
+  cp -Trv "$file" "$HOME/$file"
 done
 
 echo "done"

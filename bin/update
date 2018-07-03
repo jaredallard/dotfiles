@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+#
+# Quick script to populate / update my dot files
+
+config_dirs="alacritty i3 i3lock"
+home=".zshrc .tmux .tmux.conf .tmux.conf.local"
+
+# files that should go here, but don't
+map=$(cat <<EOF
+/usr/bin/lock:.config/i3lock/lock
+EOF
+)
+
+if [[ ! -e ".config" ]]; then
+  mkdir .config
+fi
+
+# setup .config stuff 
+for dir in $config_dirs; do
+  location="$HOME/.config/$dir"
+  echo " import confg dir: $location"
+
+  cp -rv "$location" ".config/$dir"
+done
+
+# setup root level paths
+for unknown in $home; do
+  location="$HOME/$unknown"
+  cp -rv "$location" "./"
+done
+
+# cp mapped files
+IFS=$'\n'
+for file in $map; do
+  src=$(awk -F ':' '{ print $1 }' <<<"$file")
+  dest=$(awk -F ':' '{ print $2 }' <<<"$file")
+
+  cp -rv "$src" "./$dest"
+done

@@ -3,23 +3,36 @@ if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
   exec startx
 fi
 
+# autostart tmux if not already running
 if [[ -z "$TMUX" ]]; then
   if ! tmux attach; then
     exec tmux
   fi
 fi
 
-source $HOME/antigen.zsh
-
 ### Plugins
-antigen use oh-my-zsh
 
-antigen bundle junegunn/fzf
-antigen bundle git
-antigen bundle zsh-users/zsh-syntax-highlighting
+# oh-my-zsh fixes
+DISABLE_AUTO_UPDATE=true
+ZSH="${HOME}/.cache/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
 
-antigen theme theunraveler
-antigen apply
+# load antibody plugins
+source ~/.zsh_plugins.sh
+
+PROMPT='%{$fg[cyan]%}日本 %{$fg[magenta]%}[%c] %{$reset_color%}'
+
+RPROMPT='%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%} $(git_prompt_status)%{$reset_color%}'
+
+ZSH_THEME_GIT_PROMPT_PREFIX=""
+ZSH_THEME_GIT_PROMPT_SUFFIX=""
+ZSH_THEME_GIT_PROMPT_DIRTY=""
+ZSH_THEME_GIT_PROMPT_CLEAN=""
+ZSH_THEME_GIT_PROMPT_ADDED="%{$fg[cyan]%} ✈"
+ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[yellow]%} ✭"
+ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%} ✗"
+ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[blue]%} ➦"
+ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[magenta]%} ✂"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[grey]%} ✱"
 
 ### BEGIN MY MODIFICATIONS
 export PATH="$HOME/.bin:$HOME/go/bin:${PATH}"
@@ -65,37 +78,10 @@ alias kdess='kde statefulset'
 alias ke='k exec -it'
 alias kl='k logs -f'
 
-
 # Go
 export GOPATH="$HOME/go"
 
-# Colin's cool jump shit
-export MARKPATH="$HOME/.marks"
-
-j() {
-  if [[ -z $1 ]]; then
-    mrk=$(ls $MARKPATH | fzf --border)
-  else
-    mrk=$1
-  fi
-  cd -P "$MARKPATH/$mrk" 2> /dev/null || (echo "No such mark: $mrk" && marks)
-}
-
-mark() {
-  mrk="$*"
-  mkdir -p "$MARKPATH"; ln -s "$(pwd)" "$MARKPATH/$mrk"
-}
-
-unmark() {
-  mrk="$*"
-  rm -i "$MARKPATH/$mrk"
-}
-
-marks() {
-  ls -l "$MARKPATH" | sed 's/  / /g' | cut -d' ' -f9- && echo
-}
-
-
+### Fuzzy finder shit i never use
 if fzf --version >/dev/null; then
   if [[ $- == *i* ]]; then
     # CTRL-T - Paste the selected file path(s) into the command line

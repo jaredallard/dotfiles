@@ -16,6 +16,7 @@ set noswapfile                                    " save often don't worry about
 set nobackup                                      " ditto
 set nowrap                                        " don't word wrap
 let loaded_matchparen = 1                         " don't highlight matched parens
+let g:tmuxline_preset = 'nightly_fox'             " tmuxline status
 
 let mapleader = ","
 let maplocalleader = "\\"
@@ -57,3 +58,8 @@ au FileType javascript call MakeSpacelessBufferIabbrev('cl', 'console.log("Æ:",
 
 au FileType javascript call MakeSpacelessBufferIabbrev('jstr', 'console.log(JSON.stringify(, null, 2));<c-o>12h')
 
+" Pathogen
+execute pathogen#infect()
+
+" auto open up nerdtree
+autocmd vimenter * NERDTree

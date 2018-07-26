@@ -18,8 +18,8 @@ font-1 = MaterialIcons:size=10;0
 font-2 = Termsynu:size=8:antialias=false;-2
 font-3 = FontAwesome:size=10;0
 
-modules-left = powermenu mpd
-modules-right = volume backlight wireless-network wired-network battery date
+modules-left = spotify
+modules-right = volume wireless-network wired-network battery date
 
 [bar/bottom]
 monitor = eDP-1
@@ -47,25 +47,6 @@ font-5 = Termsynu:size=8:antialias=false;0
 
 modules-left = i3
 modules-right = cpu memory
-
-[module/backlight]
-type = internal/xbacklight
-format = <ramp> <bar>
-
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-
-bar-width = 10
-bar-indicator = |
-bar-indicator-font = 3
-bar-indicator-foreground = #ff
-bar-fill = ─
-bar-fill-font = 3
-bar-fill-foreground = #c9665e
-bar-empty = ─
-bar-empty-font = 3
-bar-empty-foreground = #44
 
 [module/battery]
 type = internal/battery
@@ -102,11 +83,11 @@ animation-charging-framerate = 750
 [module/i3]
 type = internal/i3
 
-ws-icon-0 = term;
-ws-icon-1 = web;
-ws-icon-2 = code;
-ws-icon-3 = music;
-ws-icon-4 = irssi;
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
 ws-icon-default = 
 
 format = <label-state> <label-mode>
@@ -139,27 +120,27 @@ label-empty-font = 4
 label-empty-padding = 4
 
 label-monocle = 
-label-monocle-underline = ${module/bspwm.label-active-underline}
+label-monocle-underline = ${module/i3.label-active-underline}
 label-monocle-background = #33ffffff
 label-monocle-padding = 2
 
 label-locked = 
 label-locked-foreground = #bd2c40
-label-locked-underline = ${module/bspwm.label-monocle-underline}
-label-locked-padding = ${module/bspwm.label-monocle-padding}
+label-locked-underline = ${module/i3.label-monocle-underline}
+label-locked-padding = ${module/i3.label-monocle-padding}
 
 label-sticky = 
 label-sticky-foreground = #fba922
-label-sticky-underline = ${module/bspwm.label-monocle-underline}
-label-sticky-padding = ${module/bspwm.label-monocle-padding}
+label-sticky-underline = ${module/i3.label-monocle-underline}
+label-sticky-padding = ${module/i3.label-monocle-padding}
 
 label-private = 
 label-private-foreground = #bd2c40
-label-private-underline = ${module/bspwm.label-monocle-underline}
-label-private-padding = ${module/bspwm.label-monocle-padding}
+label-private-underline = ${module/i3.label-monocle-underline}
+label-private-padding = ${module/i3.label-monocle-padding}
 
-[module/bspwm-tmp]
-type = internal/bspwm
+[module/i3-tmp]
+type = internal/i3
 format = <label-state>
 
 label-active = 
@@ -251,6 +232,13 @@ bar-progress-empty = ─
 bar-progress-empty-font = 3
 bar-progress-empty-foreground = #44
 
+[module/spotify]
+type = custom/script
+interval = 1
+format-prefix = " "
+format = <label>
+exec = bash ~/.config/polybar/now_playing.sh
+
 [module/wireless-network]
 type = internal/network
 interface = wlp2s0
@@ -293,38 +281,6 @@ ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
 ramp-volume-3 = 
-
-[module/powermenu]
-type = custom/menu
-
-format-padding = 5
-
-label-open = 
-label-close = 
-
-menu-0-0 = Terminate WM
-menu-0-0-foreground = #fba922
-menu-0-0-exec = i3 exit
-menu-0-1 = Reboot
-menu-0-1-foreground = #fba922
-menu-0-1-exec = menu_open-1
-menu-0-2 = Power off
-menu-0-2-foreground = #fba922
-menu-0-2-exec = menu_open-2
-
-menu-1-0 = Cancel
-menu-1-0-foreground = #fba922
-menu-1-0-exec = menu_open-0
-menu-1-1 = Reboot
-menu-1-1-foreground = #fba922
-menu-1-1-exec = sudo reboot
-
-menu-2-0 = Power off
-menu-2-0-foreground = #fba922
-menu-2-0-exec = sudo poweroff
-menu-2-1 = Cancel
-menu-2-1-foreground = #fba922
-menu-2-1-exec = menu_open-0
 
 [module/clock]
 type = internal/date

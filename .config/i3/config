@@ -162,18 +162,30 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Lock on alt+l
-bindsym $mod+l exec --no-startup-id lock
+bindsym $mod+l exec --no-startup-id ~/.config/i3lock/lock
 
 # Capture
 bindsym --release Print exec --no-startup-id "import -window root ~/Desktop/screenshot.png"
 
 # No window borders
 new_window 1pixel
+
 # Pulseaudio
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 1 toggle
+
+# Spotify / ETC
+bindsym XF86AudioPlay exec ~/.config/i3/play_or_pause
+bindsym XF86AudioPause exec ~/.config/i3/play_or_pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Sreen brightness controls
+# actually uses acpibacklight
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 -fps 60 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 -fps 60 # decrease screen brightness
 
 # Gaps
 bindsym $mod+Shift+g exec sh ~/.config/i3/togglegaps.sh toggle
@@ -183,18 +195,6 @@ gaps inner 20
 for_window [class=".*"] border pixel 3
 new_window pixel 3
 new_float pixel 3
-
-
-# Colors
-set_from_resource	      $background       background
-set_from_resource       $theme-active     foreground
-set_from_resource       $theme-inactive   trueblack
-
-client.background	      $background
-client.unfocused          $theme-active   $theme-active   $theme-inactive $theme-active   $theme-active
-client.focused_inactive $theme-inactive $theme-inactive $theme-active   $theme-active   $theme-inactive
-client.focused        $theme-inactive $theme-inactive $theme-active   $theme-inactive $theme-inactive
-
 
 # Execute stuff
 exec --no-startup-id ~/.bin/setup-monitors.sh

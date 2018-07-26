@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+playing=$(playerctl status)
+if [[ "$playing" == "Playing" ]]; then
+  playerctl pause
+else
+  playerctl play
+fi

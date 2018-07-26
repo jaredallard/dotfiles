@@ -30,4 +30,6 @@ done
 
 echo "done"
 
+echo "NOTE: Don't forget to run antibody and output it ~/.zsh_plugins.zsh"
+
 popd >/dev/null 2>&1

@@ -1,6 +1,6 @@
 let g:netrw_dirhistmax  =10
 let g:netrw_dirhist_cnt =4
-let g:netrw_dirhist_1='/home/jared/.screenlayout'
-let g:netrw_dirhist_2='/home/jared/.config/i3'
-let g:netrw_dirhist_3='/home/jared/Code/Azuqua/auth/.circleci'
-let g:netrw_dirhist_4='/home/jared/.screenlayout'
+let g:netrw_dirhist_1='/home/jared/go/src/github.com/azuqua/ledger/pkg/helpers'
+let g:netrw_dirhist_2='/home/jared/go/src/github.com/azuqua/ledger/pkg/kubernetes'
+let g:netrw_dirhist_3='/home/jared/go/src/github.com/azuqua/ledger/pkg/logger'
+let g:netrw_dirhist_4='/home/jared/Code/kubernetes/setup'

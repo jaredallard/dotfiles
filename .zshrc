@@ -1,5 +1,5 @@
 # start xorg
-if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+if [[ -t 0 && $(tty) == "/dev/tty1" && ! $DISPLAY ]]; then
   exec startx
 fi
 
@@ -9,6 +9,9 @@ if [[ -z "$TMUX" ]]; then
     exec tmux
   fi
 fi
+
+### gpg-agent fixes
+export GPG_TTY=$(tty)
 
 ### Plugins
 
@@ -168,3 +171,9 @@ if fzf --version >/dev/null; then
     bindkey '^R' fzf-history-widget
   fi
 fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/jared/google-cloud-sdk/path.zsh.inc' ]; then source '/home/jared/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/jared/google-cloud-sdk/completion.zsh.inc' ]; then source '/home/jared/google-cloud-sdk/completion.zsh.inc'; fi

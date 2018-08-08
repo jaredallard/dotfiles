@@ -61,5 +61,12 @@ au FileType javascript call MakeSpacelessBufferIabbrev('jstr', 'console.log(JSON
 " Pathogen
 execute pathogen#infect()
 
-" auto open up nerdtree
-autocmd vimenter * NERDTree
+" fzf Fuzzy Searching
+noremap <c-p> :GitFiles<CR>
+
+" fzf string searching
+command! -bang -nargs=* FindStandard call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+noremap <c-f> :FindStandard
+
+" <Ctrl-l> redraws the screen and removes any search highlighting.
+nnoremap <silent> <C-l> :nohl<CR><C-l>

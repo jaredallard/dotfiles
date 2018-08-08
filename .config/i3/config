@@ -202,4 +202,4 @@ exec --no-startup-id ~/.background/set-bg.sh
 exec --no-startup-id polybar bottom
 exec --no-startup-id polybar top
 exec --no-startup-id "pulseaudio --start"
-exec --no-startup-id "compton --vsync opengl --no-fading-openclose"
+exec --no-startup-id "compton --backend glx --vsync opengl-swc --no-fading-openclose"

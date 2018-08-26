@@ -13,7 +13,7 @@ spacing = 2
 padding-right = 5
 module-margin = 4
 
-font-0 = NotoSans-Regular:size=8;-1
+font-0 = Fira Code bold:size=9;-1
 font-1 = MaterialIcons:size=10;0
 font-2 = Termsynu:size=8:antialias=false;-2
 font-3 = FontAwesome:size=10;0
@@ -38,7 +38,7 @@ padding-right = 4
 module-margin-left = 0
 module-margin-right = 6
 
-font-0 = NotoSans-Regular:size=8;0
+font-0 = Fira Code bold:size=9;0
 font-1 = unifont:size=6;-3
 font-2 = FontAwesome:size=8;-2
 font-3 = NotoSans-Regular:size=8;-1
@@ -87,20 +87,20 @@ format = <label-state> <label-mode>
 
 label-dimmed-underline = ${BAR.background}
 
-label-active = %icon%
+label-active = %index%
 label-active-foreground = #fff
 label-active-background = #773f3f3f
 label-active-underline = #c9665e
 label-active-font = 4
 label-active-padding = 4
 
-label-occupied = %icon%
+label-occupied = %index%
 label-occupied-foreground = #dd
 label-occupied-underline = #666
 label-occupied-font = 4
 label-occupied-padding = 4
 
-label-urgent = %icon%
+label-urgent = %index%
 label-urgent-foreground = #000000
 label-urgent-background = #bd2c40
 label-urgent-underline = #9b0a20

@@ -5,6 +5,7 @@ fi
 
 # autostart tmux if not already running
 if [[ -z "$TMUX" ]]; then
+
   if ! tmux attach; then
     exec tmux
   fi
@@ -38,7 +39,7 @@ ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[magenta]%} ✂"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[grey]%} ✱"
 
 ### BEGIN MY MODIFICATIONS
-export PATH="$HOME/.bin:$HOME/go/bin:${PATH}"
+export PATH="$HOME/.bin:$HOME/go/bin:$HOME/.yarn/bin:${PATH}"
 
 alias ls='ls --color=auto'
 export EDITOR=nvim
@@ -171,6 +172,18 @@ if fzf --version >/dev/null; then
     bindkey '^R' fzf-history-widget
   fi
 fi
+
+# Autocomplete for some wrapper utils
+_klc() {
+  COMPREPLY=( $(kubectl get pod --template "{{ range .items }}{{ .metadata.name }} {{ end }}") )
+}
+
+_kubectx() {
+  COMPREPLY=($(kubectl config get-contexts --output='name'))
+}
+
+complete -F _kubectx kubectx
+complete -F _klc klc
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/jared/google-cloud-sdk/path.zsh.inc' ]; then source '/home/jared/google-cloud-sdk/path.zsh.inc'; fi

@@ -7,4 +7,4 @@ if [[ $? -ne 0 ]]; then
   exit 0
 fi
 
-echo " $song - $artist"
+echo "    $artist - $song"

@@ -36,7 +36,7 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+Shift+q kill
 
 # start rofi (a program launcher)
-bindsym $mod+space exec rofi -show run
+bindsym $mod+space exec rofi -show run -font "Fira Code bold 12"
 
 # change focus
 bindsym $mod+j focus left
@@ -61,30 +61,8 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# split in horizontal orientation
-bindsym $mod+h split h
-# split in vertical orientation
-bindsym $mod+v split v
-
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
-
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-#bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -184,8 +162,11 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 20 -fps 60 # increase screen br
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 -fps 60 # decrease screen brightness
 
 # Gaps
-bindsym $mod+Shift+g exec sh ~/.config/i3/togglegaps.sh toggle
 gaps inner 20
+
+# Modify the amount of gaps
+bindsym $mod+plus gaps inner current plus 5
+bindsym $mod+minus gaps inner current minus 5 
 
 # Borders
 for_window [class=".*"] border pixel 2

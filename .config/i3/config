@@ -188,7 +188,7 @@ bindsym $mod+Shift+g exec sh ~/.config/i3/togglegaps.sh toggle
 gaps inner 20
 
 # Borders
-for_window [class=".*"] border pixel 0
+for_window [class=".*"] border pixel 2
 hide_edge_borders both
 
 # Execute stuff

@@ -61,6 +61,9 @@ au FileType javascript call MakeSpacelessBufferIabbrev('jstr', 'console.log(JSON
 " Pathogen
 execute pathogen#infect()
 
+" Theme
+let g:airline_theme='atomic'
+
 " fzf Fuzzy Searching
 noremap <c-p> :GitFiles<CR>
 

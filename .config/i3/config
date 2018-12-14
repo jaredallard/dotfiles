@@ -43,6 +43,9 @@ bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+semicolon focus right
 
+# move windows to another monitor
+bindsym $mod+m exec --no-startup-id python ~/.config/i3/cycle-workspaces.py
+
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -145,10 +148,10 @@ bindsym --release Print exec --no-startup-id "import -window root ~/Desktop/scre
 new_window 1pixel
 
 # Pulseaudio
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 1 toggle
+bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/i3/pactl-wrapper set-sink-volume +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/i3/pactl-wrapper set-sink-volume -5%
+bindsym XF86AudioMute exec --no-startup-id ~/.config/i3/pactl-wrapper set-sink-mute toggle
+bindsym XF86AudioMicMute exec --no-startup-id ~/.config/i3/pactl-wrapper set-source-mute toggle
 
 # Spotify / ETC
 bindsym XF86AudioPlay exec ~/.config/i3/play_or_pause

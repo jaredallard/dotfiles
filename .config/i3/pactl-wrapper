@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+active_sink=$(pactl list sinks short | grep RUNNING | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,')
+cmd="$1"
+shift
+pactl "$cmd" $active_sink $@

@@ -11,6 +11,13 @@ if [[ -z "$TMUX" ]]; then
   fi
 fi
 
+### share a ssh-agent session
+if [[ ! -e "/tmp/ssh-agent" ]]; then
+  ssh-agent > /tmp/ssh-agent
+fi
+
+source /tmp/ssh-agent 1>/dev/null 2>&1
+
 ### gpg-agent fixes
 export GPG_TTY=$(tty)
 
@@ -81,6 +88,23 @@ alias kdess='kde statefulset'
 # misc
 alias ke='k exec -it'
 alias kl='k logs -f'
+alias sudo='sudo -E'
+
+## azuquactl
+alias a='azuquactl'
+
+# azuquactl context
+alias ac='a context'
+
+# azuquactl auth
+alias aak='a auth kubernetes'
+
+# azuquactl development
+alias ad='a development'
+alias adt='ad tests'
+alias adtls='adt list-jobs'
+alias adtl='adt logs'
+
 
 # Go
 export GOPATH="$HOME/go"
@@ -190,3 +214,9 @@ if [ -f '/home/jared/google-cloud-sdk/path.zsh.inc' ]; then source '/home/jared/
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/jared/google-cloud-sdk/completion.zsh.inc' ]; then source '/home/jared/google-cloud-sdk/completion.zsh.inc'; fi
+
+# The next line enablse shell command completion for azure :puke:
+if [ -f "$HOME/azure-cli/az.completion" ]; then source /home/jared/azure-cli/az.completion; fi
+
+# azuquactl
+export PATH="${PATH}:/home/jared/.azuquactl"

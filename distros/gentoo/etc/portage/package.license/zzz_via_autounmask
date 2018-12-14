@@ -1,0 +1,29 @@
+# required by media-fonts/kochi-substitute (argument)
+>=media-fonts/kochi-substitute-20030809-r3 free-noncomm
+# required by media-gfx/imagemagick-7.0.8.5::gentoo[corefonts]
+# required by imagemagick (argument)
+>=media-fonts/corefonts-1-r7 MSttfEULA
+# required by media-sound/spotify (argument)
+>=media-sound/spotify-1.0.80 Spotify
+# required by google-chrome (argument)
+>=www-client/google-chrome-67.0.3396.99 google-chrome
+# required by slack-bin (argument)
+>=net-im/slack-bin-3.2.1 all-rights-reserved
+# required by media-video/ffmpeg-3.4.4::gentoo[fdk]
+# required by media-video/handbrake-1.1.1::gentoo[-libav]
+# required by handbrake (argument)
+=media-libs/fdk-aac-0.1.5 FraunhoferFDK
+# required by net-im/skypeforlinux (argument)
+>=net-im/skypeforlinux-8.30.0.50 Skype-TOS
+# required by steam-launcher (argument)
+>=games-util/steam-launcher-1.0.0.56 ValveSteamLicense
+# required by steamcmd (argument)
+>=games-server/steamcmd-1.0-r1 Steam
+# required by x11-base/xorg-x11-7.4-r3::gentoo[fonts]
+# required by @selected
+# required by @world (argument)
+>=media-fonts/font-bh-ttf-1.0.3-r1 bh-luxi
+# required by x11-base/xorg-x11-7.4-r3::gentoo[fonts]
+# required by @selected
+# required by @world (argument)
+>=media-fonts/font-bh-type1-1.0.3-r1 bh-luxi

@@ -46,7 +46,11 @@ ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[magenta]%} ✂"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[grey]%} ✱"
 
 ### BEGIN MY MODIFICATIONS
-export PATH="$HOME/.bin:$HOME/go/bin:$HOME/.yarn/bin:${PATH}"
+
+# Setup colorscheme off of image
+#wal -i ~/.background/current
+
+export PATH="$HOME/.bin:$HOME/go/bin:$HOME/.yarn/bin:${PATH}:$HOME/.cargo/bin"
 
 alias ls='ls --color=auto'
 export EDITOR=nvim
@@ -89,6 +93,9 @@ alias kdess='kde statefulset'
 alias ke='k exec -it'
 alias kl='k logs -f'
 alias sudo='sudo -E'
+
+alias pontus='azuquactl pontus'
+alias ledger='azuquactl ledger'
 
 ## azuquactl
 alias a='azuquactl'
@@ -209,14 +216,17 @@ _kubectx() {
 complete -F _kubectx kubectx
 complete -F _klc klc
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/jared/google-cloud-sdk/path.zsh.inc' ]; then source '/home/jared/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/jared/google-cloud-sdk/completion.zsh.inc' ]; then source '/home/jared/google-cloud-sdk/completion.zsh.inc'; fi
-
-# The next line enablse shell command completion for azure :puke:
-if [ -f "$HOME/azure-cli/az.completion" ]; then source /home/jared/azure-cli/az.completion; fi
-
 # azuquactl
 export PATH="${PATH}:/home/jared/.azuquactl"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/jared/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/home/jared/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/jared/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/jared/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+# azuquactl
+source <(azuquactl completion zsh)
+
+# istio
+export PATH="$PATH:/home/jared/istio-1.0.4/bin:$HOME/.local/bin"

@@ -44,7 +44,7 @@ bindsym $mod+k focus down
 bindsym $mod+semicolon focus right
 
 # move windows to another monitor
-bindsym $mod+m exec --no-startup-id python ~/.config/i3/cycle-workspaces.py
+bindsym $mod+m exec --no-startup-id python3 ~/.config/i3/cycle-workspaces.py
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left

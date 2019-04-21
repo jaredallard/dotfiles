@@ -52,7 +52,10 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[grey]%} ✱"
 
 export PATH="$HOME/.bin:$HOME/go/bin:$HOME/.yarn/bin:${PATH}:$HOME/.cargo/bin"
 
+# general aliases
 alias ls='ls --color=auto'
+alias batlvl='echo -e $(cat /sys/class/power_supply/BAT0/capacity)%'
+
 export EDITOR=nvim
 
 alias gp='git push'
@@ -60,6 +63,7 @@ alias gp='git push'
 source <(kubectl completion zsh)
 source <(kops completion zsh)
 source <(stern --completion=zsh)
+
 # my aliases for kubectl
 alias k=kubectl
 
@@ -112,11 +116,10 @@ alias adt='ad tests'
 alias adtls='adt list-jobs'
 alias adtl='adt logs'
 
-
 # Go
 export GOPATH="$HOME/go"
 
-### Fuzzy finder shit i never use
+### Fuzzy finder shit i use now
 if fzf --version >/dev/null; then
   if [[ $- == *i* ]]; then
     # CTRL-T - Paste the selected file path(s) into the command line
@@ -204,29 +207,11 @@ if fzf --version >/dev/null; then
   fi
 fi
 
-# Autocomplete for some wrapper utils
-_klc() {
-  COMPREPLY=( $(kubectl get pod --template "{{ range .items }}{{ .metadata.name }} {{ end }}") )
-}
-
-_kubectx() {
-  COMPREPLY=($(kubectl config get-contexts --output='name'))
-}
-
-complete -F _kubectx kubectx
-complete -F _klc klc
-
 # azuquactl
 export PATH="${PATH}:/home/jared/.azuquactl"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/jared/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/home/jared/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/jared/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/jared/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 
 # azuquactl
 source <(azuquactl completion zsh)
 
-# istio
-export PATH="$PATH:/home/jared/istio-1.0.4/bin:$HOME/.local/bin"
+# krew
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"

@@ -165,21 +165,19 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 20 -fps 60 # increase screen br
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 -fps 60 # decrease screen brightness
 
 # Gaps
-gaps inner 20
+gaps inner 32
+gaps outer 16
 
 # Modify the amount of gaps
 bindsym $mod+plus gaps inner current plus 5
 bindsym $mod+minus gaps inner current minus 5 
 
 # Borders
-for_window [class=".*"] border pixel 2
-hide_edge_borders both
+for_window [class=".*"] border pixel 0
 
 # Execute stuff
 exec --no-startup-id ~/.bin/setup-monitors.sh
 exec --no-startup-id ~/.background/set-bg.sh
-#exec --no-startup-id polybar bottom
-exec --no-startup-id polybar top
-#exec --no-startup-id "pulseaudio --start"
+exec --no-stcrtup-id polybar top
 exec --no-startup-id "compton --vsync opengl --no-fading-openclose"
 exec --no-startup-id "redshift -l 47.6062:-122.3321 -t 5700:3200"

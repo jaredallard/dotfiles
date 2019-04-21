@@ -10,3 +10,10 @@ source <(curl -s https://raw.githubusercontent.com/jaredallard/dotfiles/master/i
 
 ![make it yours](http://i.giphy.com/Vc5x1pG5RFH3O.gif)
 
+## Requirements
+
+ * [i3-gaps-shapes](https://github.com/resloved/i3) - tiling window manager
+ * [antigen](https://github.com/getantibody/antibody) - plugin managment
+ * [kitty](https://github.com/kovidgoyal/kitty/releases) - terminal emulator
+ * [rofi](https://github.com/davatorium/rofi) - application launcher
+ * [polybar](https://github.com/jaagr/polybar) - cool status bar

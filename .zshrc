@@ -1,6 +1,6 @@
 # start xorg
 if [[ -t 0 && $(tty) == "/dev/tty1" && ! $DISPLAY ]]; then
-  exec startx
+ exec startx
 fi
 
 # autostart tmux if not already running
@@ -10,13 +10,6 @@ if [[ -z "$TMUX" ]]; then
     exec tmux
   fi
 fi
-
-### share a ssh-agent session
-if [[ ! -e "/tmp/ssh-agent" ]]; then
-  ssh-agent > /tmp/ssh-agent
-fi
-
-source /tmp/ssh-agent 1>/dev/null 2>&1
 
 ### gpg-agent fixes
 export GPG_TTY=$(tty)
@@ -215,3 +208,7 @@ source <(azuquactl completion zsh)
 
 # krew
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+# azuquactl
+export PATH="${PATH}:/home/jared/.azuquactl"
+source <(azuquactl completion zsh)

@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
-is_at_work=$(xrandr | grep DP2 | awk '{ print $2 }')
+num_displays=$(xrandr | grep " connected " | awk '{ print$1 }' | wc -l)
 
-if [[ "$is_at_work" == "connected" ]]; then
-    echo "Setting up monitors for work"
-    $HOME/.screenlayout/work.sh
-    sleep 2
-    $HOME/.background/set-bg.sh
-    exit 0
+echo "Number of connected displays: $num_displays"
+if [[ "$num_displays" == "4" ]]; then
+  echo "Setting up monitors for work"
+  $HOME/.screenlayout/work.sh
+  sleep 2
+  $HOME/.background/set-bg.sh
+  exit 0
+else
+  echo "noop"
 fi
-
-echo "not configuring for work" 

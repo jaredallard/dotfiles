@@ -178,6 +178,9 @@ for_window [class=".*"] border pixel 0
 # Execute stuff
 exec --no-startup-id ~/.bin/setup-monitors.sh
 exec --no-startup-id ~/.background/set-bg.sh
-exec --no-stcrtup-id polybar top
-exec --no-startup-id "compton --vsync opengl --no-fading-openclose"
-exec --no-startup-id "redshift -l 47.6062:-122.3321 -t 5700:3200"
+exec --no-startup-id polybar top
+exec --no-startup-id compton --config ~/.config/compton.conf
+exec --no-startup-id pulseaudio
+exec --no-startup-id redshift -l 47.608013:-122.335167 -t 6500k:3000K
+## Arch: D-Bus isn't starting this for some reason
+exec --no-startup-id /usr/lib/notify-osd/notify-osd

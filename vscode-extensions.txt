@@ -2,7 +2,6 @@ aaron-bond.better-comments
 adamhartford.vscode-base64
 akamud.vscode-theme-onedark
 arcticicestudio.nord-visual-studio-code
-auiworks.amvim
 azemoh.one-monokai
 be5invis.vscode-icontheme-nomo-dark
 budparr.language-hugo-vscode
@@ -13,7 +12,6 @@ dbaeumer.vscode-eslint
 eamodio.gitlens
 Equinusocio.vsc-material-theme
 exiasr.hadolint
-googlecloudtools.cloudcode
 jolaleye.horizon-theme-vscode
 justusadam.language-haskell
 lamartire.git-indicators
@@ -22,7 +20,6 @@ mohd-akram.vscode-html-format
 ms-kubernetes-tools.vscode-kubernetes-tools
 ms-vscode.Go
 PeterJausovec.vscode-docker
-piousdeer.horizon-theme-vscode-default-token-colors
 pnp.polacode
 quicktype.quicktype
 redhat.vscode-yaml

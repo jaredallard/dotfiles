@@ -91,24 +91,6 @@ alias ke='k exec -it'
 alias kl='k logs -f'
 alias sudo='sudo -E'
 
-alias pontus='azuquactl pontus'
-alias ledger='azuquactl ledger'
-
-## azuquactl
-alias a='azuquactl'
-
-# azuquactl context
-alias ac='a context'
-
-# azuquactl auth
-alias aak='a auth kubernetes'
-
-# azuquactl development
-alias ad='a development'
-alias adt='ad tests'
-alias adtls='adt list-jobs'
-alias adtl='adt logs'
-
 # Go
 export GOPATH="$HOME/go"
 
@@ -199,16 +181,3 @@ if fzf --version >/dev/null; then
     bindkey '^R' fzf-history-widget
   fi
 fi
-
-# azuquactl
-export PATH="${PATH}:/home/jared/.azuquactl"
-
-# azuquactl
-source <(azuquactl completion zsh)
-
-# krew
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
-# azuquactl
-export PATH="${PATH}:/home/jared/.azuquactl"
-source <(azuquactl completion zsh)

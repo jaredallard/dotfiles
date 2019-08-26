@@ -43,7 +43,7 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[grey]%} ✱"
 # Setup colorscheme off of image
 #wal -i ~/.background/current
 
-export PATH="$HOME/.bin:$HOME/go/bin:$HOME/.yarn/bin:${PATH}:$HOME/.cargo/bin"
+export PATH="$HOME/.bin:$HOME/go/bin:$HOME/.yarn/bin:${PATH}:$HOME/.cargo/bin:$HOME/.local/bin"
 
 # general aliases
 alias ls='ls --color=auto'
@@ -90,6 +90,7 @@ alias kdess='kde statefulset'
 alias ke='k exec -it'
 alias kl='k logs -f'
 alias sudo='sudo -E'
+alias diff='diff -u --color=always'
 
 # Go
 export GOPATH="$HOME/go"
@@ -181,3 +182,18 @@ if fzf --version >/dev/null; then
     bindkey '^R' fzf-history-widget
   fi
 fi
+
+### ---
+### Docker
+### ---
+export DOCKER_BUILDKIT=1
+
+### --
+### Ruby :(
+### --
+eval "$(rbenv init -)"
+
+### --
+### Long Live azuquactl (outreach cli)
+### --
+alias ac='azuquactl-context'

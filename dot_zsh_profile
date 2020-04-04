@@ -1,3 +1,6 @@
+#!/usr/bin/env zsh
+
+# attempt to make the coredump smaller
 # some nonsense that probably doesn't help at all, but here we go
 autoload -Uz compinit
 if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then

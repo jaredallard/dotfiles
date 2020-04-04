@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 get_time_ms() {
   gdate +%s%3N
 }

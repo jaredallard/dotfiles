@@ -21,6 +21,8 @@ while read key; do
   cat > "$keyPath" << EOF
 {{- onepasswordDocument "$uuid" -}}
 EOF
+
+  chmod 0600 "$keyPath"
   
   echo " --> adding '$fileName' to chemozi"
   chezmoi add --template "$keyPath"

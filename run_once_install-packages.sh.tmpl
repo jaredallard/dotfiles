@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#
+# Install initial packages.
+
+{{ if eq .chezmoi.os "darwin" }}
+if ! command -v brew >/dev/null 2>&1; then
+  # Install Homebrew
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+fi
+{{ end }}

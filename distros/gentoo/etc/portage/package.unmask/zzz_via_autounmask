@@ -1,7 +1,0 @@
-# required by sys-kernel/buildkernel-1.0.30-r1::sakaki-tools
-# required by sys-kernel/buildkernel (argument)
-# /etc/portage/package.mask/sakaki-tools-rpo:
-=app-crypt/staticgpg-1.4.16
-# required by app-portage/genup (argument)
-# /etc/portage/package.mask/sakaki-tools-rpo:
-=app-portage/genup-1.0.16

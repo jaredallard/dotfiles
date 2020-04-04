@@ -1,0 +1,38 @@
+Host *
+  ControlMaster auto
+  ControlPath ~/.ssh/sockets/%C
+  ControlPersist 600
+
+Host kirito.local
+  IdentityFile ~/.ssh/id_server
+
+Host github.com
+  IdentityFile ~/.ssh/id_github
+
+Host ssh.balena-devices.com
+  IdentityFile ~/.ssh/id_github
+
+Host git.satania.space
+  User gitea
+  IdentityFile ~/.ssh/id_github
+
+Host 178.128.55.12
+  IdentityFile ~/.ssh/id_github
+
+Host minecraft.tritonjs.com
+  User jaredallard
+  Hostname 192.168.50.207
+  IdentityFile ~/.ssh/id_server
+
+Host computercraft
+  User computercraft
+  Hostname 192.168.50.207
+  IdentityFile ~/.ssh/id_computercraft
+  Port 2222
+
+Host *.service.consul
+  IdentityFile ~/.ssh/id_outreach
+
+Host bastion.*
+  IdentityFile ~/.ssh/id_outreach
+  AddKeysToAgent yes

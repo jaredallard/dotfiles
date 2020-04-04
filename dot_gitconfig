@@ -1,0 +1,43 @@
+# This is Git's per-user configuration file.
+[user]
+  name = Jared Allard
+  email = jaredallard@outlook.com
+  #signingKey = 28EAEE7E7A63B17EDB11944B28E0F95E06CA4378
+
+[core]
+  editor = nvim
+
+[github]
+  user = jaredallard
+
+[color]
+  ui = true
+
+[push]
+  default = simple
+
+[format]
+  pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+  graph = true
+
+[log]
+  abbrevCommit = true
+
+[merge]
+  rebase = true
+
+[pull]
+  rebase = true
+
+#[commit]
+#  gpgSign = true
+
+# Bad HTTP
+[url "git@github.com:"]
+  insteadOf = https://gojp:gojp@github.com/
+[url "git@github.com:"]
+  pushInsteadOf = "git://github.com/"
+[url "git@github.com:"]
+  pushInsteadOf = "https://github.com/"
+[url "git@github.com:"]
+	insteadOf = https://github.com/

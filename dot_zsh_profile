@@ -1,14 +1,5 @@
 #!/usr/bin/env zsh
 
-# attempt to make the coredump smaller
-# some nonsense that probably doesn't help at all, but here we go
-autoload -Uz compinit
-if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
-  compinit
-else
-  compinit -C
-fi
-
 export PATH="$HOME/.bin:$HOME/go/bin:$HOME/.yarn/bin:${PATH}:$HOME/.cargo/bin"
 
 # start xorg
@@ -76,8 +67,6 @@ export EDITOR=nvim
 alias gp='git push'
 # kubectl
 source <(kubectl completion zsh)
-source <(kops completion zsh)
-source <(stern --completion=zsh)
 
 # my aliases for kubectl
 alias k=kubectl

@@ -1,6 +1,10 @@
 #!/usr/bin/env zsh
 get_time_ms() {
-  gdate +%s%3N
+  if command -v gdate >/dev/null 2>&1; then 
+    gdate +%s%3N
+  else
+    date +%s%3N
+  fi
 }
 
 started=$(get_time_ms)

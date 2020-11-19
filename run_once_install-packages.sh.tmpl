@@ -2,9 +2,32 @@
 #
 # Install initial packages.
 
+echo "running first init on {{ .chezmoi.os }}"
+
+echo "Installing Dependencies"
 {{ if eq .chezmoi.os "darwin" }}
 if ! command -v brew >/dev/null 2>&1; then
-  # Install Homebrew
+  echo " -> Installing Homebrew"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
+
+if ! command -v antibody >/dev/null 2>&1; then
+  echo " -> Installing Anitbody"
+  brew install antibody
+fi
 {{ end }}
+
+{{ if eq .chezmoi.os "linux" }}
+if ! command -v antibody >/dev/null 2>&1; then
+  echo " -> Installing antibody"
+  curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
+fi
+{{ end }}
+
+echo "Running configuration tool(s)"
+
+echo " -> Running Antibody"
+ssh-keyscan github.com > ~/.ssh/known_hosts
+antibody bundle < ~/.zsh_plugins.txt > ~/.zsh_plugins.sh
+
+echo "Done! Don't forget to commit changes :)"

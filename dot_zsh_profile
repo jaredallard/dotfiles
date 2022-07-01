@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+export KUBECONFIG="$HOME/.kube/config:$HOME/.outreach/kubeconfig.yaml"
 export PATH="$HOME/.bin:$HOME/go/bin:$HOME/.yarn/bin:${PATH}:$HOME/.cargo/bin"
 
 # start xorg
@@ -33,36 +34,10 @@ source ~/.zsh_plugins.sh
 # custom prompt
 PROMPT="%{$fg[cyan]%}日本 $PROMPT"
 
-
-# Setup colorscheme off of image
-#wal -i ~/.background/current
-
-
-# Find where asdf should be installed
-ASDF_DIR="${ASDF_DIR:-$HOME/.asdf}"
-ASDF_COMPLETIONS="$ASDF_DIR/completions"
-
-# If not found, check for Homebrew package
-if [[ ! -f "$ASDF_DIR/asdf.sh" ]] && command -v brew >/dev/null; then
-   ASDF_DIR="/usr/local/opt/asdf"
-   ASDF_COMPLETIONS="$ASDF_DIR/etc/bash_completion.d"
-fi
-
-# Load command
-if [[ -f "$ASDF_DIR/asdf.sh" ]]; then
-    . "$ASDF_DIR/asdf.sh"
-
-    # Load completions
-    if [[ -f "$ASDF_COMPLETIONS/asdf.bash" ]]; then
-        . "$ASDF_COMPLETIONS/asdf.bash"
-    fi
-fi
-
 # general aliases
-alias batlvl='echo -e $(cat /sys/class/power_supply/BAT0/capacity)%'
-alias cat='bat --tabs 2'
-
-export EDITOR=nvim
+if command -v bat >/dev/null 2>&1; then
+  alias cat='bat --tabs 2'
+fi
 
 alias gp='git push'
 # kubectl
@@ -104,10 +79,6 @@ alias sudo='sudo -E'
 
 # Go
 export GOPATH="$HOME/go"
-export GOPRIVATE="github.com/getoutreach/*"
-
-# Triton
-alias dockerx="docker --tlsverify -H=docker.tritonjs.com:2376 --tlscacert=$HOME/docker-certs/client/ca.pem --tlscert=$HOME/docker-certs/client/cert.pem --tlskey=$HOME/docker-certs/client/key.pem"
 
 ### Fuzzy finder shit i use now
 if fzf --version >/dev/null; then
@@ -196,16 +167,3 @@ if fzf --version >/dev/null; then
     bindkey '^R' fzf-history-widget
   fi
 fi
-
-zap_pretty_go_outreach() {
-  jq -Rrc '. as $line | try(fromjson | . + {"time":.["@timestamp"],"severity":.level,"caller":""} | del(.["@timestamp"], .level)) catch $line' 2>&1 | zap-pretty
-}
-
-alias log-pretty=zap_pretty_go_outreach
-
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/jaredallard/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jaredallard/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/jaredallard/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jaredallard/google-cloud-sdk/completion.zsh.inc'; fi

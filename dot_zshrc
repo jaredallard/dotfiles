@@ -1,14 +1,11 @@
 #!/usr/bin/env zsh
-get_time_ms() {
-  if command -v gdate >/dev/null 2>&1; then 
-    gdate +%s%3N
-  else
-    date +%s%3N
-  fi
-}
+export EDITOR=nvim
 
-started=$(get_time_ms)
+if [[ -e "$HOME/.outreach" ]]; then
+###start-marker|{"name":"orcsource","description":"Allows Outreach specific shell hooks"}
+source "$HOME/.outreach/outreachrc.sh"
+###end-marker
+fi
+
 source ~/.zsh_profile
-finished=$(get_time_ms)
-diff=$((finished-started))
-echo " --> loaded zshrc in $diff milliseconds"
+

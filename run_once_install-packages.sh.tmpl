@@ -2,7 +2,16 @@
 #
 # Install initial packages.
 
-echo "running first init on {{ .chezmoi.os }}"
+echo "Running first init on {{ .chezmoi.os }}"
+
+echo "Setting up secrets ..."
+chmod 0600 "$HOME/.ssh/id_"*
+chmod 0600 "$HOME/.gpg/"*.gpg
+
+for key in "$HOME/.gpg/"*; do
+  gpg --import "$key"
+done
+
 
 echo "Installing Dependencies"
 {{ if eq .chezmoi.os "darwin" }}

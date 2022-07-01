@@ -2,7 +2,7 @@
 [user]
   name = Jared Allard
   email = jaredallard@outlook.com
-  #signingKey = 28EAEE7E7A63B17EDB11944B28E0F95E06CA4378
+  signingKey = 8604F73A7C30D5CE5C549763401F4B9A029266B7
 
 [core]
   editor = nvim
@@ -29,15 +29,9 @@
 [pull]
   rebase = true
 
-#[commit]
-#  gpgSign = true
+[commit]
+  gpgSign = true
 
 # Bad HTTP
-[url "git@github.com:"]
-  insteadOf = https://gojp:gojp@github.com/
-[url "git@github.com:"]
-  pushInsteadOf = "git://github.com/"
-[url "git@github.com:"]
-  pushInsteadOf = "https://github.com/"
 [url "git@github.com:"]
 	insteadOf = https://github.com/

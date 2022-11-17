@@ -5,3 +5,6 @@ Host *
 
 Host github.com
   IdentityFile ~/.ssh/id_github
+###start-marker|{"name":"OutreachConfig","description":"This block is meant to house the include directive that points to Outreach-specific ssh config."}
+Include ~/.ssh/outreach/config.outreach
+###end-marker

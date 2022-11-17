@@ -1,4 +1,0 @@
-robbyrussell/oh-my-zsh
-junegunn/fzf
-zsh-users/zsh-syntax-highlighting
-MichaelAquilina/zsh-you-should-use

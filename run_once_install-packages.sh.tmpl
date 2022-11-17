@@ -1,42 +1,23 @@
-#!/usr/bin/env bash
-#
-# Install initial packages.
-
 echo "Running first init on {{ .chezmoi.os }}"
 
-echo "Setting up secrets ..."
-chmod 0600 "$HOME/.ssh/id_"*
-chmod 0600 "$HOME/.gpg/"*.gpg
-
-for key in "$HOME/.gpg/"*; do
-  gpg --import "$key"
-done
-
-
 echo "Installing Dependencies"
-{{ if eq .chezmoi.os "darwin" }}
+{{- if eq .chezmoi.os "darwin" }}
 if ! command -v brew >/dev/null 2>&1; then
   echo " -> Installing Homebrew"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-if ! command -v antibody >/dev/null 2>&1; then
-  echo " -> Installing Anitbody"
-  brew install antibody
-fi
-{{ end }}
+echo " -> Installing coreutils"
+brew install coreutils
 
-{{ if eq .chezmoi.os "linux" }}
-if ! command -v antibody >/dev/null 2>&1; then
-  echo " -> Installing antibody"
-  curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
-fi
-{{ end }}
+packages=(tmux fzf nvim kubectl zplug fd bat)
+for package in "${packages[@]}"; do
+  if ! command -v "$package" >/dev/null; then
+    brew install "$package"
+  fi
+done
+{{- end }}
 
-echo "Running configuration tool(s)"
-
-echo " -> Running Antibody"
-ssh-keyscan github.com > ~/.ssh/known_hosts
-antibody bundle < ~/.zsh_plugins.txt > ~/.zsh_plugins.sh
-
-echo "Done! Don't forget to commit changes :)"
+{{- if eq .chezmoi.os "linux" }}
+echo "Linux depedencies are unmanaged by chezmoi dotfiles right now."
+{{- end }}

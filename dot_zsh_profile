@@ -1,6 +1,10 @@
 #!/usr/bin/env zsh
 set +o pipefail
 
+# support bash completion
+autoload bashcompinit
+bashcompinit
+
 # start xorg
 if [[ -t 0 && $(tty) == "/dev/tty1" && ! $DISPLAY ]]; then
   exec startx
@@ -31,7 +35,7 @@ if ! zplug check; then
   zplug install
 fi
 
-zplug load
+zplug load || echo "Help: Run 'zplug load --verbose for more information"
 
 ### BEGIN MY MODIFICATIONS
 

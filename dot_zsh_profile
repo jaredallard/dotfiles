@@ -1,36 +1,48 @@
 #!/usr/bin/env zsh
-set +o pipefail
-
-# support bash completion
-autoload bashcompinit
-bashcompinit
+OS=$(uname | tr '[:upper:]' '[:lower:]')
+ARCH=$(uname -m)
+if [[ "$ARCH" == "x86_64" ]]; then
+  ARCH="amd64"
+fi
 
 # start xorg
 if [[ -t 0 && $(tty) == "/dev/tty1" && ! $DISPLAY ]]; then
   exec startx
 fi
 
+# brewPrefix is the path to where brew packages are installed.
+# defaults to "". This should, generally, be carefully used as
+# it won't work OOTB on Linux.
+brewPrefix=$(brew --prefix 2>/dev/null || echo "")
+
 # start tmux
 export ZSH_TMUX_AUTOSTART=true
 
 # fzf configuration
-export FZF_BASE="$(brew --prefix)/opt/fzf"
 export FZF_DEFAULT_COMMAND=fd
 
 # zplug
-export ZPLUG_HOME="$(brew --prefix)/opt/zplug"
+export ZPLUG_HOME="$brewPrefix/opt/zplug"
 source "$ZPLUG_HOME/init.zsh"
 
-zplug "jackharrisonsherlock/common", as:theme, from:github
-zplug "plugins/tmux", as:plugin, from:oh-my-zsh
-zplug "plugins/asdf", as:plugin, from:oh-my-zsh
-zplug "plugins/kubectl", as:plugin, from:oh-my-zsh
-zplug "plugins/fzf", as:plugin, from:oh-my-zsh
-zplug "plugins/git", as:plugin, from:oh-my-zsh
-zplug "plugins/gpg-agent", as:plugin, from:oh-my-zsh
 zplug "zsh-users/zsh-autosuggestions", as:plugin, from:github
 zplug "zsh-users/zsh-syntax-highlighting", as:plugin, from:github
 
+# Libraries to load from oh-my-zsh
+omzsh_libs=("misc" "key-bindings" "history" "completion" "clipboard")
+for omzsh_lib in "${omzsh_libs[@]}"; do
+  zplug "lib/$omzsh_lib", from:oh-my-zsh
+done
+
+# Plugins to load from oh-my-zsh
+omzsh_plugins=("tmux" "asdf" "kubectl" "fzf" "git" "gpg-agent" "ssh-agent" "termsupport")
+for omzsh_plugin in "${omzsh_plugins[@]}"; do
+  zplug "plugins/$omzsh_plugin", from:oh-my-zsh
+done
+
+zplug "jackharrisonsherlock/common", as:theme, from:github
+
+# Install all the things
 if ! zplug check; then
   zplug install
 fi
@@ -43,8 +55,22 @@ zplug load || echo "Help: Run 'zplug load --verbose for more information"
 PROMPT="%{$fg[cyan]%}日本 $PROMPT"
 
 # general aliases
-if command -v bat >/dev/null 2>&1; then
-  alias cat='bat --tabs 2'
+
+# cat -> bat, syntax highlighting
+if command -v bat >/dev/null 2>&1 || command -v batcat >/dev/null 2>&1; then
+  commandName="bat"
+  if command -v batcat >/dev/null 2>&1; then
+    commandName="batcat"
+    
+    # nice to have, alias bat to batcat
+    alias bat="$commandName"
+  fi
+  alias cat="$commandName --tabs 2"
+fi
+
+# Replace ls with a better version ;)
+if command -v lsd >/dev/null 2>&1; then
+  alias ls='lsd --group-dirs first'
 fi
 
 # Go

@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 export EDITOR=nvim
 
-if [[ -e "$HOME/.outreach" ]]; then
+if [[ -e "$HOME/.outreach/shellrc" ]]; then
 ###start-marker|{"name":"orcsource","description":"Allows Outreach specific shell hooks"}
 source "$HOME/.outreach/outreachrc.sh"
 ###end-marker

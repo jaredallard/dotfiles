@@ -58,9 +58,6 @@ au FileType javascript call MakeSpacelessBufferIabbrev('cl', 'console.log("Æ:",
 
 au FileType javascript call MakeSpacelessBufferIabbrev('jstr', 'console.log(JSON.stringify(, null, 2));<c-o>12h')
 
-" Pathogen
-execute pathogen#infect()
-
 " Theme
 let g:airline_theme='atomic'
 

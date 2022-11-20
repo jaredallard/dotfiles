@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
-feh --bg-fill $HOME/.background/current
+# Sets the background to the current
+# background image.
+feh --bg-fill "$HOME/.background/current"

@@ -59,15 +59,17 @@ elif [[ "$OS" == "linux" ]]; then
   fi
 
   echo " -> Setting up APT Repositories"
+  # Kubernetes
   sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
   echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+  # Github CLI
+  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+  sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
 
   echo " -> Installing System Packages"
   sudo apt update
-  sudo apt install tmux fzf neovim bat kubectl cargo
-
-  echo " -> Installing Rust Package(s)"
-  CARGO_NET_GIT_FETCH_WITH_CLI=true cargo install lsd
+  sudo apt install tmux fzf neovim bat kubectl
 else
   echo "Warning: Unsupported Operating System '$OS'"
   echo "Please install the following tools yourself:"

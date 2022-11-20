@@ -1,8 +1,21 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Takes a screenshot of all active monitor(s) and locks the screen.
+# In the background applies a transparency filter (it takes time).
+# Then re-locks the screen with the provided image.
+pushd "$HOME/.config/i3lock/" >/dev/null || exit 1
+# Take a screenshot of all monitors
+import -silent -window root window.png
 
-cd "$HOME/.config/i3lock/"
-import -silent -window root window.png;
+# Lock the screen
 i3lock -c "#000000" &
-convert window.png -scale 100% -blur 0x15 -scale 100% lock.png;
+
+# Add a blur to the screenshot
+convert window.png -scale 100% -blur 0x15 -scale 100% lock.png
+
+# Kill all i3lock instances
 killall i3lock
-i3lock -i lock.png
+
+# Re-lock the screen with the provided image. If, for whatever reason
+# this fails, attempt to lock the screen again.
+i3lock -i lock.png || i3lock -c "#000000"
+popd >/dev/null || exit 1

@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
+# Toggle on/off for media.
 
-playing=$(playerctl status)
-if [[ "$playing" == "Playing" ]]; then
-  playerctl pause
-else
-  playerctl play
+status=$(playerctl status 2>/dev/null)
+
+command="play"
+if [[ "$status" == "Playing" ]]; then
+  command="pause"
 fi
+exec playerctl "$command"

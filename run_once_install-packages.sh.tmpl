@@ -69,7 +69,12 @@ elif [[ "$OS" == "linux" ]]; then
 
   echo " -> Installing System Packages"
   sudo apt update
-  sudo apt install tmux fzf neovim bat kubectl
+  sudo apt install tmux fzf neovim bat kubectl gh
+
+  if [[ -e "bin/chezmoi" ]]; then
+    echo " -> Persisting chezmoi install"
+    sudo cp bin/chezmoi /usr/local/bin/chezmoi
+  fi
 else
   echo "Warning: Unsupported Operating System '$OS'"
   echo "Please install the following tools yourself:"

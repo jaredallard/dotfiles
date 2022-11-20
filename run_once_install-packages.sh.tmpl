@@ -90,3 +90,8 @@ else
   echo "Please do this before starting a new terminal session."
   exit 1
 fi
+
+if ! gh auth status >/dev/null 2>&1; then
+  echo " -> Authenticating with GitHub"
+  gh auth login
+fi

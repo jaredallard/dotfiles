@@ -75,7 +75,7 @@ setup_1password_darwin() {
   TEMP_FILE=$(mktemp)
   trap 'rm -f $TEMP_FILE' EXIT
 
-  curl -fsSLo "$DOWNLOAD_URL" "$TEMP_FILE"
+  curl -fsSLo "$TEMP_FILE" "$DOWNLOAD_URL"
   sudo installer -verbose -pkg "$TEMP_FILE" -target /
   rm -f "$TEMP_FILE"
 }

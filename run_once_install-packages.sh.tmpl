@@ -33,23 +33,30 @@ if [[ "$OS" == "darwin" ]]; then
     brew 'bat'
     brew 'lsd'
     brew 'jq'
+    brew 'wget'
 
     # Applications
+    mas "Tailscale", id:1470499037
+    mas "Telegram", id:747648890
     cask "1password-cli"
-    cask "1password" unless File.directory?('/Applications/1Password.app')
+    cask "1password"
     cask "google-chrome" unless File.directory?('/Applications/Google Chrome.app')
-    cask "font-hack-nerd-font" unless File.directory?('/Applications/Visual Studio Code.app')
+    cask "visual-studio-code" unless File.directory?('/Applications/Visual Studio Code.app')
+    cask "iterm2" unless File.directory?('/Applications/iTerm.app')
     cask 'docker' unless File.directory?('/Applications/Docker.app')
 
     # Fonts
-    cask "visual-studio-code"
+    cask "font-hack-nerd-font"
 EOF
 elif [[ "$OS" == "linux" ]]; then
   echo " -> Installing zplug"
+  # HACK: Hardcoded path.
   export ZPLUG_HOME=/opt/zplug
-  sudo mkdir -p "$ZPLUG_HOME"
-  sudo chown "$(whoami):$(whoami)" "$ZPLUG_HOME"
-  curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+  if [[ ! -e "$ZPLUG_HOME" ]]; then
+    sudo mkdir -p "$ZPLUG_HOME"
+    sudo chown "$(whoami):$(whoami)" "$ZPLUG_HOME"
+    curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+  fi
 
   echo " -> Setting up APT Repositories"
   sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
@@ -60,7 +67,7 @@ elif [[ "$OS" == "linux" ]]; then
   sudo apt install tmux fzf neovim bat kubectl cargo
 
   echo " -> Installing Rust Package(s)"
-  cargo install lsd
+  CARGO_NET_GIT_FETCH_WITH_CLI=true cargo install lsd
 else
   echo "Warning: Unsupported Operating System '$OS'"
   echo "Please install the following tools yourself:"

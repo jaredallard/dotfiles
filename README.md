@@ -13,7 +13,7 @@ then remove them. This is to make it easier to install the dotfiles, chezmoi and
 the post-install script will permanently install them later.
 
 ```
-sh -c "$(curl -fsLS https://raw.githubusercontent.com/jaredallard/dotfiles/main/setup.sh)"
+bash -c "$(curl -fsLS https://raw.githubusercontent.com/jaredallard/dotfiles/main/setup.sh)"
 ```
 
 ## License

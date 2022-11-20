@@ -8,20 +8,14 @@ life. My dotfiles, without me, are useless. Without my dotfiles, I am useless.
 
 ## Install
 
-Download [chezmoi](https://github.com/twpayne/chezmoi/blob/master/docs/INSTALL.md#one-line-package-install) and [op](https://support.1password.com/command-line-getting-started/).
+**Note**: The below script will install the 1Password CLI and chezmoi temporarily, and
+then remove them. This is to make it easier to install the dotfiles, chezmoi and
+the post-install script will permanently install them later.
 
-```bash
-# Install the 1Password CLI
-# https://developer.1password.com/docs/cli/get-started/#install
-
-$ eval $(op signin my.1password.com <email>)
-$ chezmoi init https://github.com/jaredallard/dotfiles.git
+```
+sh -c "$(curl -fsLS https://raw.githubusercontent.com/jaredallard/dotfiles/main/setup.sh)"
 ```
 
-## Requirements
+## License
 
- * [i3-gaps-shapes](https://github.com/resloved/i3) - tiling window manager
- * [antigen](https://github.com/getantibody/antibody) - plugin managment
- * [kitty](https://github.com/kovidgoyal/kitty/releases) - terminal emulator
- * [rofi](https://github.com/davatorium/rofi) - application launcher
- * [polybar](https://github.com/jaagr/polybar) - cool status bar
+GPL-3.0 

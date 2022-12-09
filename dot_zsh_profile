@@ -19,6 +19,9 @@ if [[ "$OS" == "darwin" ]] && ! command -v "brew" >/dev/null; then
 fi
 brewPrefix=$(brew --prefix 2>/dev/null || echo "")
 
+# 1Password ssh-agent
+export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
+
 # start tmux
 export ZSH_TMUX_AUTOSTART=true
 
@@ -39,7 +42,7 @@ for omzsh_lib in "${omzsh_libs[@]}"; do
 done
 
 # Plugins to load from oh-my-zsh
-omzsh_plugins=("tmux" "asdf" "kubectl" "fzf" "git" "gpg-agent" "ssh-agent" "termsupport")
+omzsh_plugins=("tmux" "asdf" "kubectl" "fzf" "git" "termsupport")
 for omzsh_plugin in "${omzsh_plugins[@]}"; do
   zplug "plugins/$omzsh_plugin", from:oh-my-zsh
 done
@@ -59,13 +62,19 @@ zplug load || echo "Help: Run 'zplug load --verbose for more information"
 PROMPT="%{$fg[cyan]%}日本 $PROMPT"
 
 # general aliases
+alias kg='k get'
+alias kd='k describe'
+alias kdel='k delete'
+
+# fix kubectl aliases
+source <(kubectl completion zsh)
 
 # cat -> bat, syntax highlighting
 if command -v bat >/dev/null 2>&1 || command -v batcat >/dev/null 2>&1; then
   commandName="bat"
   if command -v batcat >/dev/null 2>&1; then
     commandName="batcat"
-    
+
     # nice to have, alias bat to batcat
     alias bat="$commandName"
   fi

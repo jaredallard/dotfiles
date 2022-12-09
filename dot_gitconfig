@@ -1,14 +1,21 @@
 # This is Git's per-user configuration file.
 [user]
   name = Jared Allard
-  email = jaredallard@outlook.com
-  signingKey = 8604F73A7C30D5CE5C549763401F4B9A029266B7
+  email = jaredallard@users.noreply.github.com
+  # From 1Password
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGjG+wtoMV+TQzbN6zEitMcq5aMZmHduxPFbrDKVxwfW
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  program = "op-ssh-sign"
+
+[commit]
+  gpgsign = true
 
 [core]
   editor = nvim
-
-[github]
-  user = jaredallard
 
 [color]
   ui = true
@@ -16,12 +23,10 @@
 [push]
   default = simple
 
+# Better format for `git log` and friends
 [format]
   pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
   graph = true
-
-[log]
-  abbrevCommit = true
 
 [merge]
   rebase = true
@@ -29,9 +34,15 @@
 [pull]
   rebase = true
 
-[commit]
-  gpgSign = true
-
 # Bad HTTP
 [url "git@github.com:"]
-	insteadOf = https://github.com/
+  insteadOf = https://github.com/
+
+# Shorthands Syntax
+[url "git@github.com:getoutreach/"]
+  insteadOf = o:
+[url "git@github.com:"]
+  insteadOf = gh:
+
+[init]
+	defaultBranch = main

@@ -16,6 +16,19 @@ the post-install script will permanently install them later.
 bash -c "$(curl -fsLS https://raw.githubusercontent.com/jaredallard/dotfiles/main/setup.sh)"
 ```
 
+### WSL2
+
+Sadly I haven't automated the following:
+
+```bash
+# Fixes git signing
+sudo ln -s /mnt/c/Users/<user>/AppData/Local/1Password/app/8/op-ssh-sign.exe /usr/local/bin/op-ssh-sign
+
+# ssh-agent
+# Do the stuff here: https://github.com/albertony/npiperelay
+# For PATH, put it in the bad place :wink:
+```
+
 ## License
 
 GPL-3.0 

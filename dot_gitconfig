@@ -40,8 +40,10 @@
 
 # Shorthands Syntax
 [url "git@github.com:getoutreach/"]
+  pushInsteadOf = o:
   insteadOf = o:
 [url "git@github.com:"]
+  pushInsteadOf = gh:
   insteadOf = gh:
 
 [init]

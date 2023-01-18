@@ -72,7 +72,7 @@ setup_1password_darwin() {
   LATEST_CASK=$(curl -s "https://raw.githubusercontent.com/1Password/homebrew-tap/main/Casks/1password-cli.rb")
   LATEST_CASK_VERSION=$(echo "$LATEST_CASK" | grep "version \"" | awk '{ print $2 }' | tr -d '"')
   DOWNLOAD_URL=$(echo "$LATEST_CASK" | grep "url \"" | awk '{ print $2 }' | tr -d '"' | sed s\|\#\{version\}\|"$LATEST_CASK_VERSION"\|g)
-  TEMP_FILE=$(mktemp)
+  TEMP_FILE="$(mktemp).pkg"
   trap 'rm -f $TEMP_FILE' EXIT
 
   curl -fsSLo "$TEMP_FILE" "$DOWNLOAD_URL"

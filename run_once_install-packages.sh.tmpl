@@ -28,7 +28,6 @@ if [[ "$OS" == "darwin" ]]; then
     brew 'fzf'
     brew 'nvim'
     brew 'kubectl'
-    brew 'zplug'
     brew 'fd'
     brew 'bat'
     brew 'lsd'
@@ -60,15 +59,6 @@ EOF
     sudo ln -s /Applications/1Password.app/Contents/MacOS/op-ssh-sign /usr/local/bin/op-ssh-sign
   fi
 elif [[ "$OS" == "linux" ]]; then
-  echo " -> Installing zplug"
-  # HACK: Hardcoded path.
-  export ZPLUG_HOME=/opt/zplug
-  if [[ ! -e "$ZPLUG_HOME" ]]; then
-    sudo mkdir -p "$ZPLUG_HOME"
-    sudo chown "$(whoami):$(whoami)" "$ZPLUG_HOME"
-    curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
-  fi
-
   echo " -> Setting up APT Repositories"
   # Kubernetes
   sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
@@ -89,7 +79,6 @@ elif [[ "$OS" == "linux" ]]; then
 else
   echo "Warning: Unsupported Operating System '$OS'"
   echo "Please install the following tools yourself:"
-  echo " - zplug"
   echo " - fzf"
   echo " - tmux"
   echo " - nvim"

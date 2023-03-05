@@ -5,26 +5,31 @@ ARCH=$(uname -m)
 if [[ "$ARCH" == "x86_64" ]]; then
   ARCH="amd64"
 fi
+isWSL=$([[ -f /proc/sys/fs/binfmt_misc/WSLInterop ]] && echo "true" || echo "false")
 
 # start xorg
 if [[ -t 0 && $(tty) == "/dev/tty1" && ! $DISPLAY ]]; then
   exec startx
 fi
 
-# brewPrefix is the path to where brew packages are installed.
-# defaults to "". This should, generally, be carefully used as
-# it won't work OOTB on Linux.
+# Ensure we have access to brew on macOS
+brewPrefix=""
 if [[ "$OS" == "darwin" ]] && ! command -v "brew" >/dev/null; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
+  brewPrefix=$(brew --prefix)
 fi
-brewPrefix=$(brew --prefix 2>/dev/null || echo "")
 
 # 1Password ssh-agent
 export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
 
 ## WSL2 Support
 # Check if we're running in WSL2
-if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop ]]; then
+if [[ "$isWSL" == "true" ]]; then
+  # Windows specific paths to prevent issues with syntax highlighting speed.
+  export PATH="$PATH:/mnt/c/Program Files/Microsoft VS Code/bin"
+  export PATH="$PATH:/mnt/c/Program Files/Docker/Docker/resources/bin"
+  export PATH="$PATH:/mnt/c/WINDOWS"
+
   if ! command -v npiperelay.exe >/dev/null; then
     echo "Please install npiperelay.exe from https://github.com/albertony/npiperelay"
     sleep 15
@@ -34,7 +39,7 @@ if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop ]]; then
   # Configure ssh forwarding as per: https://1password.community/discussion/128023/ssh-agent-on-windows-subsystem-for-linux
   # need `ps -ww` to get non-truncated command for matching
   # use square brackets to generate a regex match for the process we want but that doesn't match the grep command running it!
-  if ps -auxww | grep -q "[n]piperelay.exe -ei -s //./pipe/openssh-ssh-agent"; then
+  if ! ps -auxww | grep -q "[n]piperelay.exe -ei -s //./pipe/openssh-ssh-agent"; then
     # Ensure the directory exists
     if [[ ! -e "$HOME/.1password" ]]; then
       mkdir -p "$HOME/.1password"
@@ -57,33 +62,44 @@ export ZSH_TMUX_AUTOSTART=true
 # fzf configuration
 export FZF_DEFAULT_COMMAND=fd
 
-# zplug
-export ZPLUG_HOME="$brewPrefix/opt/zplug"
-source "$ZPLUG_HOME/init.zsh"
+# Setup zgenom
+ZGENOM_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zgenom"
+[[ ! -d $ZGENOM_HOME ]] && mkdir -p "$(dirname $ZGENOM_HOME)"
+[[ ! -d $ZGENOM_HOME/.git ]] && git clone https://github.com/jandamm/zgenom.git "$ZGENOM_HOME"
+source "$ZGENOM_HOME/zgenom.zsh"
 
-zplug "zsh-users/zsh-autosuggestions", as:plugin, from:github
-zplug "zsh-users/zsh-syntax-highlighting", as:plugin, from:github
+if ! zgenom saved; then
+  # Load all libraries from ohmyzsh
+  zgenom ohmyzsh
 
-# Libraries to load from oh-my-zsh
-omzsh_libs=("misc" "key-bindings" "history" "completion" "clipboard")
-for omzsh_lib in "${omzsh_libs[@]}"; do
-  zplug "lib/$omzsh_lib", from:oh-my-zsh
-done
+  # Plugins to load from ohmyzsh
+  omzsh_plugins=("tmux" "kubectl" "fzf" "git" "docker")
+  for omzsh_plugin in "${omzsh_plugins[@]}"; do
+    zgenom ohmyzsh "plugins/$omzsh_plugin"
+  done
 
-# Plugins to load from oh-my-zsh
-omzsh_plugins=("tmux" "asdf" "kubectl" "fzf" "git" "termsupport")
-for omzsh_plugin in "${omzsh_plugins[@]}"; do
-  zplug "plugins/$omzsh_plugin", from:oh-my-zsh
-done
+  # Plugins
+  if [[ "$isWSL" == "false" ]]; then
+    # Only load syntax highlighting when not on WSL, something is broken right now.
+    zgenom load "zdharma-continuum/fast-syntx-highlighting"
+  fi
+  zgenom load "zsh-users/zsh-autosuggestions"
+  zgenom load qoomon/zsh-lazyload
 
-zplug "jackharrisonsherlock/common", as:theme, from:github
+  # Theme
+  zgenom load "jackharrisonsherlock/common" common.zsh-theme
 
-# Install all the things
-if ! zplug check; then
-  zplug install
+  # save all to init script
+  zgenom save
+
+  # Compile your zsh files
+  zgenom compile "$HOME/.zshrc"
+  zgenom compile "$HOME/.zsh_profile"
 fi
 
-zplug load || echo "Help: Run 'zplug load --verbose for more information"
+# completion & other not important things
+lazyload rtx -- 'source <(rtx activate zsh)'
+lazyload kubectl -- 'source <(kubectl completion zsh)'
 
 ### BEGIN MY MODIFICATIONS
 
@@ -94,9 +110,6 @@ PROMPT="%{$fg[cyan]%}日本 $PROMPT"
 alias kg='k get'
 alias kd='k describe'
 alias kdel='k delete'
-
-# fix kubectl aliases
-source <(kubectl completion zsh)
 
 # cat -> bat, syntax highlighting
 if command -v bat >/dev/null 2>&1 || command -v batcat >/dev/null 2>&1; then

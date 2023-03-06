@@ -8,18 +8,18 @@ fi
 isWSL=$([[ -f /proc/sys/fs/binfmt_misc/WSLInterop ]] && echo "true" || echo "false")
 
 # start xorg
-if [[ -t 0 && $(tty) == "/dev/tty1" && ! $DISPLAY ]]; then
-  exec startx
+if [[ "$OS" == "linux" ]]; then
+  if [[ -t 0 && $(tty) == "/dev/tty1" && ! $DISPLAY ]]; then
+    exec startx
+  fi
 fi
 
 # Ensure we have access to brew on macOS
-brewPrefix=""
 if [[ "$OS" == "darwin" ]] && ! command -v "brew" >/dev/null; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
-  brewPrefix=$(brew --prefix)
 fi
 
-# 1Password ssh-agent
+# Use 1Password ssh-agent
 export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
 
 ## WSL2 Support
@@ -30,6 +30,7 @@ if [[ "$isWSL" == "true" ]]; then
   export PATH="$PATH:/mnt/c/Program Files/Docker/Docker/resources/bin"
   export PATH="$PATH:/mnt/c/WINDOWS"
 
+  # Ensure npiperelay.exe is installed
   if ! command -v npiperelay.exe >/dev/null; then
     echo "Please install npiperelay.exe from https://github.com/albertony/npiperelay"
     sleep 15
@@ -56,11 +57,15 @@ if [[ "$isWSL" == "true" ]]; then
   fi
 fi
 
-# start tmux
-export ZSH_TMUX_AUTOSTART=true
+# If we have tmux, automatically start it
+if hash tmux &>/dev/null; then
+  export ZSH_TMUX_AUTOSTART=true
+fi
 
-# fzf configuration
-export FZF_DEFAULT_COMMAND=fd
+# If we have fd, use it with fzf
+if hash fd &>/dev/null; then
+  export FZF_DEFAULT_COMMAND=fd
+fi
 
 # Setup zgenom
 ZGENOM_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zgenom"
@@ -68,6 +73,10 @@ ZGENOM_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zgenom"
 [[ ! -d $ZGENOM_HOME/.git ]] && git clone https://github.com/jandamm/zgenom.git "$ZGENOM_HOME"
 source "$ZGENOM_HOME/zgenom.zsh"
 
+# Automatically update zgenom every 7 days
+zgenom autoupdate
+
+# Load libraries only if we haven't already generated an init.zsh
 if ! zgenom saved; then
   # Load all libraries from ohmyzsh
   zgenom ohmyzsh
@@ -112,9 +121,9 @@ alias kd='k describe'
 alias kdel='k delete'
 
 # cat -> bat, syntax highlighting
-if command -v bat >/dev/null 2>&1 || command -v batcat >/dev/null 2>&1; then
+if hash bat &>/dev/null || hash batcat &>/dev/null; then
   commandName="bat"
-  if command -v batcat >/dev/null 2>&1; then
+  if hash batcat &>/dev/null; then
     commandName="batcat"
 
     # nice to have, alias bat to batcat
@@ -124,9 +133,13 @@ if command -v bat >/dev/null 2>&1 || command -v batcat >/dev/null 2>&1; then
 fi
 
 # Replace ls with a better version ;)
-if command -v lsd >/dev/null 2>&1; then
+if hash lsd &>/dev/null; then
   alias ls='lsd --group-dirs first'
 fi
 
 # Go
 export GOPATH="$HOME/go"
+
+# Remove duplicates from PATH
+typeset -U PATH
+# vim: set ai ts=2 sw=2 et sts=2 ft=zsh :

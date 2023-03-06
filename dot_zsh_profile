@@ -18,7 +18,7 @@ done
 
 # Setup zgenom
 ZGENOM_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zgenom"
-[[ ! -d $ZGENOM_HOME ]] && mkdir -p "$(dirname $ZGENOM_HOME)"
+[[ ! -d $ZGENOM_HOME ]] && mkdir -p "$(dirname "$ZGENOM_HOME")"
 [[ ! -d $ZGENOM_HOME/.git ]] && git clone https://github.com/jandamm/zgenom.git "$ZGENOM_HOME"
 source "$ZGENOM_HOME/zgenom.zsh"
 
@@ -39,7 +39,7 @@ if ! zgenom saved; then
   # Plugins
   zgenom load "zdharma-continuum/fast-syntax-highlighting"
   zgenom load "zsh-users/zsh-autosuggestions"
-  zgenom load qoomon/zsh-lazyload
+  zgenom load "qoomon/zsh-lazyload"
 
   # Theme
   zgenom load "jackharrisonsherlock/common" common.zsh-theme

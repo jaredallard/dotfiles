@@ -1,71 +1,20 @@
 #!/usr/bin/env zsh
+# vim: set ai ts=2 sw=2 et sts=2 ft=zsh :
 # shellcheck shell=bash
 OS=$(uname | tr '[:upper:]' '[:lower:]')
 ARCH=$(uname -m)
 if [[ "$ARCH" == "x86_64" ]]; then
   ARCH="amd64"
 fi
-isWSL=$([[ -f /proc/sys/fs/binfmt_misc/WSLInterop ]] && echo "true" || echo "false")
 
-# start xorg
-if [[ "$OS" == "linux" ]]; then
-  if [[ -t 0 && $(tty) == "/dev/tty1" && ! $DISPLAY ]]; then
-    exec startx
-  fi
-fi
+# DOTFILES_HOME is the location of dotfile scripts and other
+# configuration applicable to my dotfiles.
+DOTFILES_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/dotfiles"
 
-# Ensure we have access to brew on macOS
-if [[ "$OS" == "darwin" ]] && ! command -v "brew" >/dev/null; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
-# Use 1Password ssh-agent
-export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
-
-## WSL2 Support
-# Check if we're running in WSL2
-if [[ "$isWSL" == "true" ]]; then
-  # Windows specific paths to prevent issues with syntax highlighting speed.
-  export PATH="$PATH:/mnt/c/Program Files/Microsoft VS Code/bin"
-  export PATH="$PATH:/mnt/c/Program Files/Docker/Docker/resources/bin"
-  export PATH="$PATH:/mnt/c/WINDOWS"
-
-  # Ensure npiperelay.exe is installed
-  if ! command -v npiperelay.exe >/dev/null; then
-    echo "Please install npiperelay.exe from https://github.com/albertony/npiperelay"
-    sleep 15
-    exit 0
-  fi
-
-  # Configure ssh forwarding as per: https://1password.community/discussion/128023/ssh-agent-on-windows-subsystem-for-linux
-  # need `ps -ww` to get non-truncated command for matching
-  # use square brackets to generate a regex match for the process we want but that doesn't match the grep command running it!
-  if ! ps -auxww | grep -q "[n]piperelay.exe -ei -s //./pipe/openssh-ssh-agent"; then
-    # Ensure the directory exists
-    if [[ ! -e "$HOME/.1password" ]]; then
-      mkdir -p "$HOME/.1password"
-    fi
-
-    # If the SSH_AUTH_SOCK already exists, remove it because no forwarding command is running.
-    if [[ -S $SSH_AUTH_SOCK ]]; then
-      rm -f "$SSH_AUTH_SOCK"
-    fi
-
-    # setsid to force new session to keep running
-    # set socat to listen on $SSH_AUTH_SOCK and forward to npiperelay which then forwards to openssh-ssh-agent on windows
-    (setsid socat UNIX-LISTEN:"$SSH_AUTH_SOCK",fork EXEC:"npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &) >/dev/null 2>&1
-  fi
-fi
-
-# If we have tmux, automatically start it
-if hash tmux &>/dev/null; then
-  export ZSH_TMUX_AUTOSTART=true
-fi
-
-# If we have fd, use it with fzf
-if hash fd &>/dev/null; then
-  export FZF_DEFAULT_COMMAND=fd
-fi
+# Load all files in $DOTFILES_HOME/zshrc.d/post-zgenom-load
+[[ -d "$DOTFILES_HOME/zshrc.d/pre-zgenom-load" ]] && for file in "$DOTFILES_HOME/zshrc.d/pre-zgenom-load"/*.plugin.zsh; do
+  source "$file"
+done
 
 # Setup zgenom
 ZGENOM_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zgenom"
@@ -82,16 +31,13 @@ if ! zgenom saved; then
   zgenom ohmyzsh
 
   # Plugins to load from ohmyzsh
-  omzsh_plugins=("tmux" "kubectl" "fzf" "git" "docker")
+  omzsh_plugins=("tmux" "kubectl" "fzf" "git" "docker" "golang")
   for omzsh_plugin in "${omzsh_plugins[@]}"; do
     zgenom ohmyzsh "plugins/$omzsh_plugin"
   done
 
   # Plugins
-  if [[ "$isWSL" == "false" ]]; then
-    # Only load syntax highlighting when not on WSL, something is broken right now.
-    zgenom load "zdharma-continuum/fast-syntx-highlighting"
-  fi
+  zgenom load "zdharma-continuum/fast-syntax-highlighting"
   zgenom load "zsh-users/zsh-autosuggestions"
   zgenom load qoomon/zsh-lazyload
 
@@ -104,42 +50,21 @@ if ! zgenom saved; then
   # Compile your zsh files
   zgenom compile "$HOME/.zshrc"
   zgenom compile "$HOME/.zsh_profile"
+  [[ -d "$DOTFILES_HOME/zshrc.d/" ]] && for dir in "$DOTFILES_HOME/zshrc.d/"*; do
+    if [[ ! -d "$dir" ]]; then
+      continue
+    fi
+
+    for file in "$dir"/*.plugin.zsh; do
+      zgenom compile "$file"
+    done
+  done
 fi
 
-# completion & other not important things
-lazyload rtx -- 'source <(rtx activate zsh)'
-lazyload kubectl -- 'source <(kubectl completion zsh)'
-
-### BEGIN MY MODIFICATIONS
-
-# custom prompt
-PROMPT="%{$fg[cyan]%}日本 $PROMPT"
-
-# general aliases
-alias kg='k get'
-alias kd='k describe'
-alias kdel='k delete'
-
-# cat -> bat, syntax highlighting
-if hash bat &>/dev/null || hash batcat &>/dev/null; then
-  commandName="bat"
-  if hash batcat &>/dev/null; then
-    commandName="batcat"
-
-    # nice to have, alias bat to batcat
-    alias bat="$commandName"
-  fi
-  alias cat="$commandName --tabs 2"
-fi
-
-# Replace ls with a better version ;)
-if hash lsd &>/dev/null; then
-  alias ls='lsd --group-dirs first'
-fi
-
-# Go
-export GOPATH="$HOME/go"
+# Load all files in $DOTFILES_HOME/zshrc.d/post-zgenom-load
+[[ -d "$DOTFILES_HOME/zshrc.d/post-zgenom-load" ]] && for file in "$DOTFILES_HOME/zshrc.d/post-zgenom-load"/*.plugin.zsh; do
+  source "$file"
+done
 
 # Remove duplicates from PATH
 typeset -U PATH
-# vim: set ai ts=2 sw=2 et sts=2 ft=zsh :

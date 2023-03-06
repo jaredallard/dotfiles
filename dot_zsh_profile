@@ -42,7 +42,7 @@ if ! zgenom saved; then
   zgenom load "qoomon/zsh-lazyload"
 
   # Theme
-  zgenom load "jackharrisonsherlock/common" common.zsh-theme
+  zgenom load "jaredallard/alien-minimal"
 
   # save all to init script
   zgenom save

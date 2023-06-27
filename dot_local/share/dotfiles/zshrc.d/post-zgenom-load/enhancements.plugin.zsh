@@ -6,14 +6,6 @@ alias kg='k get'
 alias kd='k describe'
 alias kdel='k delete'
 
-# Use 1Password ssh-agent
-export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
-
-# If we have tmux, automatically start it
-if hash tmux &>/dev/null; then
-  export ZSH_TMUX_AUTOSTART=true
-fi
-
 # If we have fd, use it with fzf
 if hash fd &>/dev/null; then
   export FZF_DEFAULT_COMMAND=fd
@@ -34,4 +26,9 @@ fi
 # Replace ls with a better version ;)
 if hash lsd &>/dev/null; then
   alias ls='lsd --group-dirs first'
+fi
+
+# If we have tmux, automatically start it
+if hash tmux &>/dev/null && [[ -z "$TMUX" ]]; then
+  exec tmux
 fi

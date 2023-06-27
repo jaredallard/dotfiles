@@ -51,7 +51,7 @@ if [[ "$OS" == "darwin" ]]; then
     # Fonts
     cask "font-hack-nerd-font"
 EOF
-elif [[ "$OS" == "linux" ]] && command -v apt @>/dev/null; then
+elif [[ "$OS" == "linux" ]] && command -v apt &>/dev/null; then
   echo " -> Setting up APT Repositories"
   # Kubernetes
   sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg

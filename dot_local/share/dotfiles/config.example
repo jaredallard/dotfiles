@@ -1,0 +1,7 @@
+# vim: set ai ts=2 sw=2 et sts=2 ft=zsh :
+# shellcheck shell=bash
+# Extra plugins to be installed through zgenom
+EXTRA_ZGENOM_PLUGINS=()
+
+# Extra extension repositories to subscribe to.
+EXTRA_EXTENSION_REPOS=()

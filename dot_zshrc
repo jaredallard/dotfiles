@@ -1,11 +1,5 @@
 #!/usr/bin/env zsh
-export EDITOR=nvim
-
-if [[ -e "$HOME/.outreach/shellrc" ]]; then
-###start-marker|{"name":"orcsource","description":"Allows Outreach specific shell hooks"}
-source "$HOME/.outreach/outreachrc.sh"
-###end-marker
-fi
+# Loads ~/.zsh_profile allowing easy hooks for
+# testing the speed of the framework.
 
 source ~/.zsh_profile
-

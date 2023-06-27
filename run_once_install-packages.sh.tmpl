@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# vim: set ai ts=2 sw=2 et sts=2 ft=zsh :
+# shellcheck shell=bash
 # Bootstraps a Machine
 OS="{{ .chezmoi.os }}"
 #ARCH="{{ .chezmoi.arch }}"
@@ -49,16 +51,7 @@ if [[ "$OS" == "darwin" ]]; then
     # Fonts
     cask "font-hack-nerd-font"
 EOF
-
-  echo "Setting up 1Password Symlink(s)"
-  if [[ ! -e "$HOME/.1password/agent.sock" ]]; then
-    mkdir -p "$HOME/.1password"
-    ln -s "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" "$HOME/.1password/agent.sock"
-  fi
-  if [[ ! -e "/usr/local/bin/op-ssh-sign" ]]; then
-    sudo ln -s /Applications/1Password.app/Contents/MacOS/op-ssh-sign /usr/local/bin/op-ssh-sign
-  fi
-elif [[ "$OS" == "linux" ]]; then
+elif [[ "$OS" == "linux" ]] && command -v apt @>/dev/null; then
   echo " -> Setting up APT Repositories"
   # Kubernetes
   sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
@@ -77,7 +70,7 @@ elif [[ "$OS" == "linux" ]]; then
     sudo cp bin/chezmoi /usr/local/bin/chezmoi
   fi
 else
-  echo "Warning: Unsupported Operating System '$OS'"
+  echo "Warning: Unsupported Operating System '$OS' (if Linux, only Debian-based distributions are supported)"
   echo "Please install the following tools yourself:"
   echo " - fzf"
   echo " - tmux"

@@ -3,7 +3,3 @@ Host *
   ControlMaster auto
   ControlPath ~/.ssh/sockets/%C
   ControlPersist 600
-
-# Uses 1Password for SSH Key(s)
-Host *
-  IdentityAgent "~/.1password/agent.sock"

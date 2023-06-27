@@ -8,27 +8,42 @@ life. My dotfiles, without me, are useless. Without my dotfiles, I am useless.
 
 ## Install
 
-**Note**: The below script will install the 1Password CLI and chezmoi temporarily, and
-then remove them. This is to make it easier to install the dotfiles, chezmoi and
-the post-install script will permanently install them later.
+**Note**: The below script will install chezmoi temporarily, and then remove it.
+This is to make it easier to install the dotfiles the post-install script will
+permanently install it later.
 
-```
+```bash
 bash -c "$(curl -fsLS https://raw.githubusercontent.com/jaredallard/dotfiles/main/setup.sh)"
 ```
 
-### WSL2
+## Customization
 
-Sadly I haven't automated the following:
+There are a few ways to customize the dotfiles. You can add files into the following directories:
+
+* `$DOTFILES_HOME/zshrc.d/`:
+  * `pre-zgenom-load/` - Files in this directory will be sourced before zgenom is loaded.
+  * `post-zgenom-load/` - Files in this directory will be sourced after zgenom is loaded.
+
+### zgenom plugins
+
+You can load zgenom plugins by adding them to `~/.local/share/dotfiles/config`.
+
+Example:
 
 ```bash
-# Fixes git signing
-sudo ln -s /mnt/c/Users/<user>/AppData/Local/1Password/app/8/op-ssh-sign.exe /usr/local/bin/op-ssh-sign
+# ~/.local/share/dotfiles/config
+EXTRA_ZGENOM_PLUGINS=(
+  "zsh-users/zsh-autosuggestions"
+  "zsh-users/zsh-syntax-highlighting"
+)
 
-# ssh-agent
-# Do the stuff here: https://github.com/albertony/npiperelay
-# For PATH, put it in the bad place :wink:
+# Load extensions from a git repo. These support the same paths as described
+# in "Customization" above.
+EXTRA_EXTENSION_REPOS=(
+  "your-git-repo-url-here"
+)
 ```
 
 ## License
 
-GPL-3.0 
+GPL-3.0

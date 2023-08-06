@@ -87,7 +87,11 @@ else
   exit 1
 fi
 
-if ! gh auth status >/dev/null 2>&1; then
-  echo " -> Authenticating with GitHub"
-  gh auth login
+# Terrible hack to see if we're in a terminal or not. If we aren't, skip
+# interactive setup steps.
+if [[ -n $TERM ]]; then
+  if ! gh auth status >/dev/null 2>&1; then
+    echo " -> Authenticating with GitHub"
+    gh auth login
+  fi
 fi

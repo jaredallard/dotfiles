@@ -16,6 +16,19 @@ permanently install it later.
 bash -c "$(curl -fsLS https://raw.githubusercontent.com/jaredallard/dotfiles/main/setup.sh)"
 ```
 
+### Remote Tunnel (VSCode)
+
+**Status**: `Alpha` (not all volume mounts have been configured)
+
+Run `create-tunnel-host.sh` to create a VSCode tunnel with these
+dotfiles on your current machine. This will be accessible at
+[vscode.dev/tunnel/<hostname>](https://vscode.dev/tunnel).
+
+**Note**: Make sure to look at the container logs on the first run. This
+will contain a Github device token you'll need to exchange for Github
+credentials through the provided link. Once this has been done, you
+won't need to do it again!
+
 ## Customization
 
 There are a few ways to customize the dotfiles. You can add files into the following directories:

@@ -3,11 +3,16 @@
 # to enable access to the host docker daemon as well as to persist
 # certain paths.
 
-# USER_DIR is the directory that is bind mounted into the container for
-# persistence.
-USER_DIR="/home/dotfiles_user"
 IMAGE="ghcr.io/jaredallard/dotfiles:latest"
 
+# Determine the container user's information.
+uid=$(docker run --rm --entrypoint=id "$IMAGE" -u)
+gid=$(docker run --rm --entrypoint=id "$IMAGE" -g)
+userName=$(docker run --rm --entrypoint=id "$IMAGE" -un)
+
+# USER_DIR is the directory that is bind mounted into the container for
+# persistence.
+USER_DIR="/home/$userName"
 if [[ ! -e "$USER_DIR" ]]; then
   echo "User directory '$USER_DIR' does not exist" 2>&1
   echo -e "Create? [y/N]: \c" 2>&1
@@ -18,11 +23,6 @@ if [[ ! -e "$USER_DIR" ]]; then
 
   sudo mkdir -p "$USER_DIR"
 fi
-
-# Determine the container user's information.
-uid=$(docker run --rm --entrypoint=id "$IMAGE" -u)
-gid=$(docker run --rm --entrypoint=id "$IMAGE" -g)
-userName=$(docker run --rm --entrypoint=id "$IMAGE" -un)
 
 echo "==========================================="
 echo "Container User Information:"

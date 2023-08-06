@@ -9,14 +9,20 @@
 #    - darwin
 set -euo pipefail
 
-if [[ -z "$OS" ]]; then
-  OS=$(uname | tr '[:upper:]' '[:lower:]')
-fi
+# OS is the operating system to setup for, valid values are:
+#  - linux
+#  - darwin
+OS=${OS:-$(uname | tr '[:upper:]' '[:lower:]')}
+
+# ARCH is the architecture to setup for, valid values are:
+#  - x86_64
+#  - arm64
+ARCH=${ARCH:-$(uname -m | tr '[:upper:]' '[:lower:]')}
 
 # log prints a line to the terminal and formats it to be easier
 # to read vs other output
 log() {
-  echo "$(tput bold)" "$@" "$(tput sgr0)"
+  echo -e "\033[1m" "$@" "\033[0m"
 }
 
 log "Started machine init: OS=$OS,ARCH=$ARCH"

@@ -2,6 +2,8 @@
 # vim: set ai ts=2 sw=2 et sts=2 ft=zsh :
 # shellcheck shell=bash
 # Bootstraps a Machine
+set -euo pipefail
+
 OS="{{ .chezmoi.os }}"
 #ARCH="{{ .chezmoi.arch }}"
 
@@ -54,16 +56,17 @@ EOF
 elif [[ "$OS" == "linux" ]] && command -v apt &>/dev/null; then
   echo " -> Setting up APT Repositories"
   # Kubernetes
-  sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-  echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+  curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
+  echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
   # Github CLI
   curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
   sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
   echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
 
   echo " -> Installing System Packages"
-  sudo apt update
-  sudo apt install tmux fzf neovim bat kubectl gh
+  sudo apt-get update
+  sudo apt-get install -y tmux fzf neovim bat kubectl gh
 
   if [[ -e "bin/chezmoi" ]]; then
     echo " -> Persisting chezmoi install"

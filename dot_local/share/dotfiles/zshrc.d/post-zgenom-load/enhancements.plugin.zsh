@@ -28,7 +28,9 @@ if hash lsd &>/dev/null; then
   alias ls='lsd --group-dirs first'
 fi
 
-# If we have tmux, automatically start it
-if hash tmux &>/dev/null && [[ -z "$TMUX" ]]; then
+# If we have tmux, automatically start it. Exception: Don't run when
+# we're in VSCode. It doesn't make a ton of sense to use tmux within a
+# vscode session.
+if hash tmux &>/dev/null && [[ -z "$TMUX" ]] && [[ -z "$VSCODE_NONCE" ]]; then
   exec tmux
 fi

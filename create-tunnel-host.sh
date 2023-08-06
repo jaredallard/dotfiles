@@ -3,7 +3,8 @@
 # to enable access to the host docker daemon as well as to persist
 # certain paths.
 
-# USER_DIR is the directory that is bind mounted into the container for persistence.
+# USER_DIR is the directory that is bind mounted into the container for
+# persistence.
 USER_DIR="/home/dotfiles_user"
 IMAGE="ghcr.io/jaredallard/dotfiles:latest"
 
@@ -37,7 +38,8 @@ persistentDirs=(
 )
 
 docker_run_args=(
-  # Make all ports accessible to the host as well as use the host hostname.
+  # Make all ports accessible to the host as well as use the host
+  # hostname.
   "--net=host"
 
   # Mount the host docker daemon into the container.

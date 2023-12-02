@@ -1,14 +1,9 @@
 # syntax=docker/dockerfile:experimental
 # VSCode tunnel image for the dotfiles.
-FROM ubuntu:23.04
+FROM ubuntu:23.10
 SHELL [ "/usr/bin/env", "bash", "-c" ]
 ENTRYPOINT ["code"]
 CMD ["tunnel", "--accept-server-license-terms"]
-
-# Update the apt sources to use our package mirror.
-RUN sed -i.bak 's/archive.ubuntu.com/100.69.242.81:9124/g' /etc/apt/sources.list \
-  &&  sed -i.bak 's/security.ubuntu.com/100.69.242.81:9124/g' /etc/apt/sources.list \
-  &&  cat /etc/apt/sources.list
 
 # Install the vscode cli and other required dependencies.
 RUN set -euo pipefail \

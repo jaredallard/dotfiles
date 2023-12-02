@@ -77,7 +77,7 @@ if ! zgenom saved; then
   zgenom ohmyzsh
 
   # Plugins to load from ohmyzsh
-  omzsh_plugins=("tmux" "kubectl" "fzf" "git" "docker")
+  omzsh_plugins=("brew" "tmux" "kubectl" "fzf" "git" "docker" "rtx")
   for omzsh_plugin in "${omzsh_plugins[@]}"; do
     zgenom ohmyzsh "plugins/$omzsh_plugin"
   done

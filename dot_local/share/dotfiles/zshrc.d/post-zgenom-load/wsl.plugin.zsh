@@ -17,13 +17,16 @@ if [[ "$isWSL" == "true" ]]; then
     exit 0
   fi
 
+  export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
+
   # Configure ssh forwarding as per: https://1password.community/discussion/128023/ssh-agent-on-windows-subsystem-for-linux
   # need `ps -ww` to get non-truncated command for matching
   # use square brackets to generate a regex match for the process we want but that doesn't match the grep command running it!
   if ! ps -auxww | grep -q "[n]piperelay.exe -ei -s //./pipe/openssh-ssh-agent"; then
     # Ensure the directory exists
-    if [[ ! -e "$HOME/.1password" ]]; then
-      mkdir -p "$HOME/.1password"
+    local dir="$(dirname "$SSH_AUTH_SOCK")"
+    if [[ ! -e "$dir" ]]; then
+      mkdir -p "$dir"
     fi
 
     # If the SSH_AUTH_SOCK already exists, remove it because no forwarding command is running.

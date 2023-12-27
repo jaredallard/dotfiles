@@ -18,11 +18,6 @@ if [[ "$OS" == "darwin" ]]; then
 
   echo " -> Installing Brew Packages"
   brew bundle --no-lock --file=/dev/stdin <<EOF
-    # Taps
-    tap 'homebrew/cask'
-    tap 'homebrew/cask-fonts'
-    tap 'homebrew/core'
-
     # Packages
     brew 'rtx'
     brew 'bash' # Latest Bash because GPL...

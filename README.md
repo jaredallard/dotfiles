@@ -22,7 +22,7 @@ bash -c "$(curl -fsLS https://raw.githubusercontent.com/jaredallard/dotfiles/mai
 
 Run `create-tunnel-host.sh` to create a VSCode tunnel with these
 dotfiles on your current machine. This will be accessible at
-[vscode.dev/tunnel/<hostname>](https://vscode.dev/tunnel).
+[vscode.dev/tunnel/&lt;hostname&gt;](https://vscode.dev/tunnel).
 
 **Note**: Make sure to look at the container logs on the first run. This
 will contain a Github device token you'll need to exchange for Github

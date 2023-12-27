@@ -20,6 +20,7 @@ fi
 
 # Load the configuration file
 if [[ -e "$CONFIG_FILE" ]]; then
+  # shellcheck disable=SC1090
   source "$CONFIG_FILE" || {
     echo "Failed to load config file at '$CONFIG_FILE'" 2>/dev/null
     echo "Refusing to load the rest of the dotfiles" 2>/dev/null

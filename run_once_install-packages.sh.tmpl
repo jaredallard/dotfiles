@@ -19,7 +19,7 @@ if [[ "$OS" == "darwin" ]]; then
   echo " -> Installing Brew Packages"
   brew bundle --no-lock --file=/dev/stdin <<EOF
     # Packages
-    brew 'rtx'
+    brew 'mise'
     brew 'bash' # Latest Bash because GPL...
     brew 'zsh' # Latest ZSH
     brew 'chezmoi' # Ensure we have chezmoi post-install

@@ -52,8 +52,8 @@ EOF
 elif [[ "$OS" == "linux" ]] && command -v apt &>/dev/null; then
   echo " -> Setting up APT Repositories"
   # Kubernetes
-  curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
-  echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+  curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+  echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
   # Github CLI
   curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
@@ -66,9 +66,13 @@ elif [[ "$OS" == "linux" ]] && command -v apt &>/dev/null; then
   sudo chmod a+r /etc/apt/keyrings/docker.gpg
   echo "deb [arch=\"$(dpkg --print-architecture)\" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \"$(. /etc/os-release && echo "$VERSION_CODENAME")\" stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 
+  # mise
+  wget -qO - https://mise.jdx.dev/gpg-key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/mise-archive-keyring.gpg 1>/dev/null
+  echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch=$(dpkg --print-architecture)] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
+
   echo " -> Installing System Packages"
   sudo apt-get update
-  sudo apt-get install -y tmux fzf neovim bat kubectl gh zsh docker-ce-cli
+  sudo apt-get install -y tmux fzf neovim bat kubectl gh zsh docker-ce-cli lsd jq wget mise
 
   if [[ -e "bin/chezmoi" ]]; then
     echo " -> Persisting chezmoi install"

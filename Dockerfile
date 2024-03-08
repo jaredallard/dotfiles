@@ -1,6 +1,9 @@
 # syntax=docker/dockerfile:experimental
 # VSCode tunnel image for the dotfiles.
 FROM ubuntu:23.10
+# Username of the custom user.
+ARG CUSTOM_USER=gitpod
+ENV SHELL /bin/zsh
 SHELL [ "/usr/bin/env", "bash", "-c" ]
 ENTRYPOINT ["code"]
 CMD ["tunnel", "--accept-server-license-terms"]
@@ -19,14 +22,15 @@ RUN set -euo pipefail \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Run the setup script under a non-root user.
-RUN useradd -m -s /bin/bash user \
-  && echo "user ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
-  && chown -R user:user /home/user
+RUN groupadd -g 33333 ${CUSTOM_USER} \
+  && useradd -u 33333 -g ${CUSTOM_USER} -m -s /bin/bash ${CUSTOM_USER} \
+  && echo "${CUSTOM_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+  && chown -R ${CUSTOM_USER}:${CUSTOM_USER} /home/${CUSTOM_USER}
 
 COPY setup.sh /tmp/setup.sh
-USER user
+USER ${CUSTOM_USER}
 WORKDIR /home/user
-RUN /tmp/setup.sh \
+RUN DEBIAN_FRONTEND=noninteractive /tmp/setup.sh \
   && sudo chsh -s /bin/zsh $(whoami) \
   && sudo apt-get clean \
   && sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

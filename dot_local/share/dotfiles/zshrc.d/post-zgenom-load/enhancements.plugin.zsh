@@ -6,6 +6,11 @@ alias kg='k get'
 alias kd='k describe'
 alias kdel='k delete'
 
+# Use neovim as the default editor if installed.
+if hash nvim &>/dev/null; then
+  export EDITOR=nvim
+fi
+
 # If we have fd, use it with fzf
 if hash fd &>/dev/null; then
   export FZF_DEFAULT_COMMAND=fd

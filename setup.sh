@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
 # Script to setup a new machine.
-# Handing as much work off, as possible
-# to chezmoi.
-#
-# Environment variables:
-#  - OS: The operating system to setup for, valid values are:
-#    - linux
-#    - darwin
+# Handing as much work off as possible to chezmoi.
 set -euo pipefail
 
 # OS is the operating system to setup for, valid values are:

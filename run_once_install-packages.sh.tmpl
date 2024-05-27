@@ -4,10 +4,10 @@
 # Bootstraps a Machine
 set -euo pipefail
 
-OS="{{ .chezmoi.os }}"
+OS="${OS_OVERRIDE:-"{{ .chezmoi.os }}"}"
 #ARCH="{{ .chezmoi.arch }}"
 
-echo "Running first init on {{ .chezmoi.os }}"
+echo "Running first init on $OS"
 
 echo "Installing Dependencies"
 if [[ "$OS" == "darwin" ]]; then
@@ -84,10 +84,12 @@ elif [[ "$OS" == "linux" ]] && command -v apt &>/dev/null; then
   echo " -> Installing System Packages"
   sudo apt-get update -y
   sudo apt-get install -y tmux fzf neovim bat kubectl gh zsh docker-ce-cli lsd jq wget mise
+  sudo apt-get install -y --no-install-recommends xdg-utils
 
   if [[ -e "bin/chezmoi" ]]; then
     echo " -> Persisting chezmoi install"
     sudo cp bin/chezmoi /usr/local/bin/chezmoi
+    rm -rf bin/
   fi
 else
   echo "Warning: Unsupported Operating System '$OS' (if Linux, only Debian-based distributions are supported)"
@@ -101,5 +103,33 @@ else
   echo " - lsd"
   echo
   echo "Please do this before starting a new terminal session."
-  exit 1
+fi
+
+if [[ "$OS" == "linux" ]]; then
+  if command -v zsh &>/dev/null; then
+    chsh "$(whoami)" --shell "$(command -v zsh)"
+  fi
+
+  if command -v xdg-user-dirs-update &>/dev/null; then
+    xdg-user-dirs-update
+  fi
+
+  if command -v gh &>/dev/null; then
+    if ! gh auth status &>/dev/null; then
+      echo " -> Configuring Git"
+      gh auth login
+    fi
+  fi
+
+  if command -v git &>/dev/null; then
+    if ! git config --global user.email &>/dev/null; then
+      read -r -p "Git email: " email
+      git config --global user.email "$email"
+    fi
+
+    if ! git config --global user.name &>/dev/null; then
+      read -r -p "Git name: " name
+      git config --global user.name "$name"
+    fi
+  fi
 fi

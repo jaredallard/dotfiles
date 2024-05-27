@@ -5,6 +5,9 @@ isWSL=$([[ -f /proc/sys/fs/binfmt_misc/WSLInterop ]] && echo "true" || echo "fal
 ## WSL2 Support
 # Check if we're running in WSL2
 if [[ "$isWSL" == "true" ]]; then
+  # Make xdg-open work OOTB.
+  export BROWSER="cmd.exe /c start"
+
   # Windows specific paths to prevent issues with syntax highlighting speed.
   export PATH="$PATH:/mnt/c/Program Files/Microsoft VS Code/bin"
   export PATH="$PATH:/mnt/c/Program Files/Docker/Docker/resources/bin"

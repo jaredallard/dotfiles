@@ -6,6 +6,12 @@ alias kg='k get'
 alias kd='k describe'
 alias kdel='k delete'
 
+# Load homebrew installed things over pre-installed macOS versions.
+if hash brew &>/dev/null; then
+  PATH="/opt/homebrew/bin:${PATH}"
+  export PATH
+fi
+
 # Use neovim as the default editor if installed.
 if hash nvim &>/dev/null; then
   export EDITOR=nvim

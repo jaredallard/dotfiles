@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:experimental
 # VSCode tunnel image for the dotfiles.
-FROM ubuntu:23.10
+FROM ubuntu:24.04
 # Username of the custom user.
 ARG CUSTOM_USER=gitpod
 ENV SHELL /bin/zsh

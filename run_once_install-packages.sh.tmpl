@@ -41,18 +41,18 @@ if [[ "$OS" == "darwin" ]]; then
     mas "Telegram", id:747648890
     cask "1password-cli"
     cask "1password" unless File.directory?('/Applications/1Password.app')
-    cask "google-chrome" unless File.directory?('/Applications/Google Chrome.app')
+    cask "firefox"
     cask "visual-studio-code" unless File.directory?('/Applications/Visual Studio Code.app')
-    cask "iterm2" unless File.directory?('/Applications/iTerm.app')
-    cask 'orbstack'
+    brew "ghostty"
+    cask "orbstack"
 
     # Fonts
-    cask "font-hack-nerd-font"
+    cask "font-iosevka"
 EOF
 elif [[ "$OS" == "linux" ]] && command -v apt &>/dev/null; then
   echo " -> Refreshing packages index"
   sudo apt-get update -y
-  
+
   echo " -> Install APT requirements"
   sudo apt-get install -y ca-certificates curl gnupg wget
   sudo mkdir -p -m 755 /etc/apt/keyrings
@@ -65,20 +65,20 @@ elif [[ "$OS" == "linux" ]] && command -v apt &>/dev/null; then
   sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list
 
   # Github CLI
-  wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
+  wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null
   sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
-  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
 
   # Docker
   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
   sudo chmod a+r /etc/apt/keyrings/docker.asc
   echo \
     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |
+    sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 
   # mise
-  wget -qO - https://mise.jdx.dev/gpg-key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/mise-archive-keyring.gpg 1> /dev/null
+  wget -qO - https://mise.jdx.dev/gpg-key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/mise-archive-keyring.gpg 1>/dev/null
   echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch=$(dpkg --print-architecture)] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
 
   echo " -> Installing System Packages"

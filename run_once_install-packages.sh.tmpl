@@ -14,10 +14,11 @@ if [[ "$OS" == "darwin" ]]; then
   if ! command -v brew >/dev/null 2>&1; then
     echo " -> Installing Homebrew"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
   fi
 
   echo " -> Installing Brew Packages"
-  brew bundle --no-lock --file=/dev/stdin <<EOF
+  brew bundle --file=/dev/stdin <<EOF
     # Packages
     brew 'mise'
     brew 'bash' # Latest Bash because GPL...

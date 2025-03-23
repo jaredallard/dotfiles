@@ -1,2 +1,4 @@
 font-family = "Iosevka Term"
-theme = catppuccin-mocha
+theme = "catppuccin-mocha"
+# We use tmux
+scrollback-limit = 0

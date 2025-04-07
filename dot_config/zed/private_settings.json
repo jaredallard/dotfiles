@@ -1,0 +1,42 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  // Generated with the following command:
+  //
+  //   jq '.extensions | keys | map( { (.|tostring): true } ) | add' \
+  //   "$HOME/Library/Application Support/Zed/extensions/index.json"
+  "auto_install_extensions": {
+    "basher": true,
+    "catppuccin": true,
+    "catppuccin-icons": true,
+    "discord-presence": true,
+    "dockerfile": true,
+    "graphviz": true,
+    "helm": true,
+    "html": true,
+    "jsonnet": true,
+    "make": true,
+    "prisma": true,
+    "proto": true,
+    "terraform": true,
+    "toml": true
+  },
+  "allow_rewrap": "in_comments",
+  "icon_theme": "Catppuccin Macchiato",
+  "ui_font_size": 15,
+  "buffer_font_size": 14,
+  "buffer_font_family": "Iosevka",
+  //"soft_wrap": "preferred_line_length",
+  "preferred_line_length": 72,
+  "theme": {
+    "mode": "system",
+    "light": "Catppuccin Macchiato",
+    "dark": "Catppuccin Macchiato"
+  }
+}

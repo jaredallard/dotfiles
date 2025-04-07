@@ -7,6 +7,18 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "assistant": {
+    "default_open_ai_model": "gpt-4o",
+    "version": "2",
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4o"
+    }
+  },
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
+
   // Generated with the following command:
   //
   //   jq '.extensions | keys | map( { (.|tostring): true } ) | add' \
@@ -29,6 +41,7 @@
   },
   "allow_rewrap": "in_comments",
   "icon_theme": "Catppuccin Macchiato",
+  "format_on_save": "on",
   "ui_font_size": 15,
   "buffer_font_size": 14,
   "buffer_font_family": "Iosevka",

@@ -18,6 +18,7 @@
   "features": {
     "edit_prediction_provider": "copilot"
   },
+  "show_edit_predictions": false, // Disable distracting automatic edit predictions.
 
   // Generated with the following command:
   //

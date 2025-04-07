@@ -37,6 +37,7 @@
     "make": true,
     "prisma": true,
     "proto": true,
+    "ruby": true,
     "terraform": true,
     "toml": true
   },

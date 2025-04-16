@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+am_date() {
+  echo "%F{$AM_VENV_COLOR}[%T]%f"
+}
+
+export AM_USE_NERD_FONT=1
+export AM_ASYNC_L_PROMPT=1
+export AM_LEFT_SECTION=(
+  am_ssh_st
+  am_date
+  am_prompt_dir
+  am_prompt_end_tag
+  am_space
+)

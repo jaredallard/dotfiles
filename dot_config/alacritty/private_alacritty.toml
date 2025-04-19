@@ -1,6 +1,9 @@
 [env]
 TERM = "xterm-256color"
 
+[scrolling]
+history = 0 # We have tmux
+
 [font]
 normal = { family = "Iosevka Nerd Font" }
 size = 14

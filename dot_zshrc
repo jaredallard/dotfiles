@@ -82,7 +82,15 @@ if ! zgenom saved; then
   zgenom ohmyzsh
 
   # Plugins to load from ohmyzsh
-  omzsh_plugins=("brew" "tmux" "kubectl" "fzf" "git" "docker" "mise" "direnv")
+  omzsh_plugins=("brew" "tmux" "kubectl" "fzf" "git" "docker")
+
+  if command -v direnv &>/dev/null; then
+    omzsh_plugins+=("direnv")
+  fi
+  if command -v mise &>/dev/null; then
+    omzsh_plugins+=("mise")
+  fi
+
   for omzsh_plugin in "${omzsh_plugins[@]}"; do
     zgenom ohmyzsh "plugins/$omzsh_plugin"
   done

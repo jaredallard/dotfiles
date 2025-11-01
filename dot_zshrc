@@ -137,8 +137,6 @@ fi
 # comment at the top is uncommented.
 # zprof
 
-lazyload nvm -- 'source ~/.nvm/nvm.sh'
-
 ## This file is managed BY GIT. Adding anything will be wiped.
 ## Anything below this line was likely added automatically on
 ## your behalf and should be removed.

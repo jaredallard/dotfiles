@@ -1,16 +1,30 @@
 [user]
 name = Jared Allard
-email = jaredallard@users.noreply.github.com
+email = jared@rgst.io
 signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGjG+wtoMV+TQzbN6zEitMcq5aMZmHduxPFbrDKVxwfW
 
 [gpg]
-	format = ssh
+  format = ssh
 
 [gpg "ssh"]
-	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+  # macOS: sudo ln -s /Applications/1Password.app/Contents/MacOS/op-ssh-sign /usr/local/bin/op-ssh-sign 
+  program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 
 [commit]
-	gpgsign = true
+  gpgsign = true
 
 [core]
-	editor = nvim -u ~/.config/nvim/disable-editorconfig.lua
+  editor = nvim -u ~/.config/nvim/disable-editorconfig.lua
+
+[credential "https://git.rgst.io"]
+  # macOS: Note, Xcode CLT may override this
+  helper = cache --timeout 21600
+  helper = oauth
+
+[credential "https://github.com"]
+  helper = 
+  helper = !gh auth git-credential
+
+[credential "https://gist.github.com"]
+  helper = 
+  helper = !gh auth git-credential

@@ -1,0 +1,25 @@
+# Halloy config.
+#
+# For a complete list of available options,
+# please visit https://halloy.chat/configuration.html
+
+theme = "Catppuccin Mocha"
+
+[notifications]
+highlight = { show_toast = true, show_content = true }
+
+[servers.soju]
+nickname = "jaredallard"
+server = "soju.koi-insen.ts.net"
+use_tls = false                  # Tailscale
+port = 6667
+
+[servers.soju.sasl.plain]
+username = "jaredallard"
+password_file = "~/.config/halloy/DO_NOT_INCLUDE_password"
+
+[buffer.chathistory]
+infinite_scroll = true
+
+[buffer.text_input.nickname]
+enabled = false
